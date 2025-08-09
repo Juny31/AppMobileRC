@@ -8,31 +8,38 @@
   <meta name="theme-color" content="#f5f5f7"/>
   <link rel="icon" href="icons/icon-192.png">
   <style>
-    :root{--line:#d2d2d7; --accent:#0071e3; --bg:#f5f5f7; --text:#1d1d1f; --muted:#6e6e73;}
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    :root{
+      --bg:#f5f5f7; --card:#ffffff; --text:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --accent:#0071e3;
+      --space-xs:8px; --space-sm:12px; --space-md:20px; --space-lg:32px; --space-xl:48px; --space-2xl:72px; --space-3xl:108px;
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.54}
     a{color:var(--accent);text-decoration:none}
-    header{position:sticky;top:0;z-index:10;backdrop-filter:saturate(180%) blur(14px);background:color-mix(in srgb, var(--bg) 70%, transparent);border-bottom:1px solid var(--line)}
-    .container{max-width:1120px;margin:auto;padding:0 16px}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .left{display:flex;align-items:center;gap:12px}
-    .logo{width:34px;height:34px;border-radius:10px}
-    .links a{margin:0 10px;color:var(--text)}
-    .cta{border:1px solid var(--line);padding:10px 14px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700}
-    .hero{display:grid;gap:16px;grid-template-columns:1fr;align-items:center;padding:26px 0}
-    @media(min-width:920px){.hero{grid-template-columns: 1.1fr .9fr}}
-    .h-title{font-size:52px;line-height:1.06;letter-spacing:-.02em;margin:10px 0}
-    .h-sub{font-size:20px;color:var(--muted);margin:8px 0 16px}
-    .hero img{width:100%;height:auto;border:1px solid var(--line);border-radius:26px;box-shadow:0 10px 40px rgba(0,0,0,.08)}
-    .bento{display:grid;gap:16px;grid-template-columns:1fr; margin:20px 0}
-    @media(min-width:920px){.bento{grid-template-columns:2fr 1fr 1fr}}
-    .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 30px rgba(0,0,0,.08)}
-    .card h3{margin:.4rem 0 .4rem}
+    header{position:sticky;top:0;z-index:10;backdrop-filter:saturate(180%) blur(16px);background:color-mix(in srgb, var(--bg) 70%, transparent);border-bottom:1px solid var(--line)}
+    .container{max-width:1200px;margin:auto;padding:0 var(--space-lg)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:var(--space-md) 0}
+    .left{display:flex;align-items:center;gap:var(--space-sm)}
+    .logo{width:40px;height:40px;border-radius:12px}
+    .links a{margin:0 var(--space-sm);color:var(--text)}
+    .cta{border:1px solid var(--line);padding:12px 18px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700}
+    section{padding: var(--space-2xl) 0}
+    .hero{display:grid;gap:var(--space-xl);grid-template-columns:1fr;align-items:center}
+    @media(min-width:980px){.hero{grid-template-columns: 1.2fr .8fr}}
+    .h-kicker{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);margin-bottom:var(--space-sm)}
+    .h-title{font-size: clamp(40px, 5.5vw, 68px); line-height:1.08; letter-spacing:-.02em; margin:0 0 var(--space-md)}
+    .h-sub{font-size: clamp(18px, 2.2vw, 22px); color:var(--muted); margin: 0 0 var(--space-lg)}
+    .hero img{width:100%;height:auto;border:1px solid var(--line);border-radius:28px;box-shadow:0 10px 44px rgba(0,0,0,.08)}
+    .bento{display:grid;gap:var(--space-lg);grid-template-columns:1fr}
+    @media(min-width:1020px){.bento{grid-template-columns: 2fr 1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-lg);box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.08)}
+    .card h3{margin:.2rem 0 .6rem;font-size: clamp(20px, 2.2vw, 24px)}
     .muted{color:var(--muted)}
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease, transform .5s ease}
-    .reveal.show{opacity:1;transform:none}
-    .pill{border:1px solid var(--line);padding:6px 10px;border-radius:999px}
-    footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);margin-top:20px}
+    .pill{border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+    .cols{display:grid;gap:var(--space-lg);grid-template-columns:1fr}
+    @media(min-width:980px){.cols{grid-template-columns:1fr 1fr}}
+    footer{padding: var(--space-xl) 0; border-top:1px solid var(--line); color:var(--muted); margin-top:var(--space-xl)}
   </style>
 </head>
 <body>
@@ -42,70 +49,83 @@
         <img src="media/logo.svg" class="logo" alt="RC">
         <strong>Regards Croisés</strong>
         <nav class="links">
-          <a href="#features">Fonctionnalités</a>
-          <a href="#screens">Aperçu</a>
-          <a href="#download">Installer</a>
+          <a href="#theme">Thème</a>
+          <a href="#objectifs">Objectifs</a>
+          <a href="#format">Format</a>
+          <a href="#app">App</a>
         </nav>
       </div>
       <a class="cta" href="app.html">Ouvrir l’app</a>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
+  <main>
+    <section class="container hero" id="top">
       <div>
-        <div class="pill reveal">Série & média</div>
-        <h1 class="h-title reveal" style="transition-delay:.05s">Des outils simples. Un design soigné.</h1>
-        <p class="h-sub reveal" style="transition-delay:.1s">Gérez vos tâches, contacts, articles & podcasts, et exportez un PDF élégant avec un récapitulatif automatique.</p>
-        <div class="reveal" style="transition-delay:.15s">
+        <span class="h-kicker">Série & média</span>
+        <h1 class="h-title">Un regard croisé, humanisant et lucide.</h1>
+        <p class="h-sub">Gérez vos tâches, contacts, articles & podcasts. Exportez un PDF élégant avec un récapitulatif automatique des actions réalisées.</p>
+        <div>
           <a class="cta" href="app.html">Ouvrir l’app</a>
-          <a class="pill" style="margin-left:10px" href="#features">Découvrir</a>
+          <a class="pill" style="margin-left:12px" href="#app">Découvrir l’outil</a>
         </div>
       </div>
-      <img src="media/cover.jpg" alt="aperçu" class="reveal" style="transition-delay:.2s">
+      <img src="media/cover.jpg" alt="aperçu">
     </section>
 
-    <section id="features" class="bento">
-      <div class="card reveal" style="grid-row: span 2; transition-delay:.05s">
-        <h3>📋 Tâches — simple & rapide</h3>
-        <p class="muted">Ajoutez, classez, assignez (Jude, Grace, + autres), dates d’échéance, notes. Vue Liste et Kanban. Statistiques automatiques.</p>
-        <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
-        <h3>📇 Contacts</h3>
-        <p class="muted">Carnet d’adresses (organisations, personnalités) avec statuts et priorités. Mini graphiques dans l’app.</p>
-        <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
-        <h3>📰 / 🎙 Articles & Podcasts</h3>
-        <p class="muted">Rédigez des résumés clairs, liez des visuels et du son.</p>
+    <section class="container cols" id="theme">
+      <div class="card">
+        <h3>THEME — JUILLET · AOÛT</h3>
+        <p class="muted">Regards croisés — <b>les conflits vus par les opprimés</b>. À travers 5 épisodes, la série donne la parole à celles et ceux qu’on n’entend jamais : civils, femmes, réfugiés, résistants invisibles.</p>
       </div>
-      <div class="card reveal" style="transition-delay:.1s">
-        <h3>🎯 Thème du mois</h3>
-        <p class="muted">Un bandeau éditorial au-dessus de l’interface et dans le PDF.</p>
-      </div>
-      <div class="card reveal" style="transition-delay:.15s">
-        <h3>📄 PDF premium</h3>
-        <p class="muted">En-tête, stats, échéances à venir, tableaux colorés, <b>récapitulatif écrit</b> des actions terminées.</p>
+      <div class="card">
+        <h3>Intention éditoriale</h3>
+        <ul class="muted">
+          <li>Mettre en avant les témoignages authentiques</li>
+          <li>Proposer une réflexion engagée et pédagogique</li>
+          <li>Favoriser la compréhension, la nuance et l'empathie</li>
+          <li>Décentrer le regard occidental sur les conflits</li>
+        </ul>
       </div>
     </section>
 
-    <section id="screens" class="bento">
-      <div class="card reveal">
-        <h3>Un aperçu épuré</h3>
-        <p class="muted">Interface mobile-first, cartes blanches, accent bleu #0071e3, header translucide.</p>
-        <a class="cta" href="app.html" style="margin-top:6px;display:inline-block">Voir l’app</a>
+    <section class="container cols" id="objectifs">
+      <div class="card">
+        <h3>OBJECTIFS</h3>
+        <p class="muted">Donner une voix aux oubliés des conflits — populations civiles, minorités, activistes, femmes, réfugiés — pour comprendre comment elles vivent, résistent, reconstruisent.</p>
       </div>
-      <div class="card reveal">
-        <h3>Installation PWA</h3>
-        <p class="muted">Hors-ligne, ajout à l’écran d’accueil, icônes dédiées.</p>
-      </div>
-      <div class="card reveal">
-        <h3>Performances</h3>
-        <p class="muted">Vanilla JS, localStorage, service worker. Déploiement ultra simple via GitHub Pages.</p>
+      <div class="card">
+        <h3>FOCUS — Goma</h3>
+        <p class="muted">Explorer le quotidien au cœur des zones de conflit : survie, résilience, perte de repères, stratégies et normalité dans la durée.</p>
       </div>
     </section>
 
-    <section id="download" class="card reveal">
-      <h3>Prêt ?</h3>
-      <p class="muted">Cliquez ci-dessous pour démarrer directement dans le navigateur, puis installez l’app depuis le bandeau qui s’affiche.</p>
-      <a class="cta" href="app.html">Ouvrir l’app</a>
+    <section class="container bento" id="format">
+      <div class="card" style="grid-row:span 2">
+        <h3>FORMAT</h3>
+        <p class="muted">Vidéos reportage ou témoignage filmé, visioconférence ou voix off, portrait croisé, mix reportage / table ronde.</p>
+        <p class="muted">Durée : 4 à 5 minutes.</p>
+      </div>
+      <div class="card">
+        <h3>PROFILS</h3>
+        <p class="muted">Artistes engagés, journalistes, ONG locales, réfugiés, humanitaires, chercheurs. Jeunes, psychologues communautaires, militantes féministes, victimes, sociologues.</p>
+      </div>
+      <div class="card">
+        <h3>Bonus</h3>
+        <p class="muted">Extraits d’un documentaire d’une ONG internationale oeuvrant pour la paix (HWPL).</p>
+      </div>
+    </section>
+
+    <section class="container cols" id="app">
+      <div class="card">
+        <h3>L’app qui vous accompagne</h3>
+        <p class="muted">Tâches (assignées à <b>Jude</b>, <b>Grace</b> + autres), échéances, notes, vue Kanban & statistiques, thème du mois. Export PDF avec récapitulatif écrit.</p>
+        <a class="cta" href="app.html" style="margin-top:12px;display:inline-block">Ouvrir l’app</a>
+      </div>
+      <div class="card">
+        <h3>Déploiement simple</h3>
+        <p class="muted">PWA hors‑ligne, service worker, manifest. Hébergement facile via GitHub Pages — aucun serveur requis.</p>
+      </div>
     </section>
   </main>
 
@@ -115,10 +135,6 @@
 
   <script>
     document.querySelector('#year').textContent = new Date().getFullYear();
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
-    }, {threshold:.15});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </script>
 </body>
 </html>
