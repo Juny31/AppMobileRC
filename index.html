@@ -619,7 +619,7 @@
         <div class="title"><h1>Regards Croisés — App</h1></div>
       </div>
       <div class="actions">
-        <a class="btn" href="index.html">Accueil</a>
+        <a class="btn" href="app.html">Accueil</a>
         <button id="btn-theme" class="btn">🌙 Sombre</button>
       </div>
     </div>
@@ -1578,10 +1578,9 @@
       });
     }
 
-    // Enhanced PDF Export with professional design
+    // PDF Export (simplified version)
     async function exportPDF() {
       try {
-        // Load jsPDF and AutoTable
         if (!window.jspdf) {
           await new Promise((resolve, reject) => {
             const script = document.createElement('script');
@@ -1592,395 +1591,35 @@
           });
         }
         
-        if (!window.jspdfAutoTable) {
-          await new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/dist/jspdf.plugin.autotable.min.js';
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-          });
-        }
-
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+        const doc = new jsPDF();
         
-        // Color palette (Apple-inspired)
-        const colors = {
-          primary: [0, 113, 227],      // Blue
-          secondary: [29, 29, 31],     // Dark gray
-          muted: [110, 110, 115],      // Light gray
-          success: [40, 205, 65],      // Green
-          warning: [255, 159, 10],     // Orange
-          danger: [255, 59, 48],       // Red
-          background: [245, 245, 247], // Light background
-          white: [255, 255, 255]
-        };
-
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        const margin = 48;
-        let yPos = margin;
-
-        // Header with background
-        doc.setFillColor(...colors.background);
-        doc.rect(0, 0, pageWidth, 80, 'F');
+        // Add content
+        doc.setFontSize(20);
+        doc.text('Regards Croisés - Rapport', 20, 30);
         
-        // Logo placeholder (gradient effect with rectangles)
-        const logoSize = 32;
-        doc.setFillColor(...colors.primary);
-        doc.roundedRect(margin, 20, logoSize, logoSize, 8, 8, 'F');
-        doc.setFillColor(255, 255, 255);
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('RC', margin + 8, 42);
-
-        // Title
-        doc.setTextColor(...colors.secondary);
-        doc.setFontSize(24);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Regards Croisés', margin + logoSize + 16, 36);
+        doc.setFontSize(12);
+        doc.text(new Date().toLocaleDateString(), 20, 50);
         
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(...colors.muted);
-        doc.text('Rapport de gestion', margin + logoSize + 16, 54);
-
-        // Date and metadata
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('fr-FR', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-        doc.setFontSize(11);
-        doc.text(`Généré le ${dateStr}`, pageWidth - margin, 42, { align: 'right' });
-
-        yPos = 100;
-
-        // Theme section
-        const theme = State.data.theme || { title: '', desc: '' };
-        if (theme.title || theme.desc) {
-          doc.setFillColor(...colors.white);
-          doc.setDrawColor(...colors.background);
-          doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 90, 12, 12, 'FD');
-          
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          doc.setTextColor(...colors.primary);
-          doc.text('THÈME DU MOIS', margin + 20, yPos + 25);
-          
-          doc.setFontSize(16);
-          doc.setTextColor(...colors.secondary);
-          doc.text(theme.title || 'Non défini', margin + 20, yPos + 50);
-          
-          if (theme.desc) {
-            doc.setFontSize(11);
-            doc.setTextColor(...colors.muted);
-            const lines = doc.splitTextToSize(theme.desc, pageWidth - 2 * margin - 40);
-            doc.text(lines.slice(0, 2), margin + 20, yPos + 70); // Limit to 2 lines
-          }
-          
-          yPos += 110;
-        }
-
-        // Statistics Overview
-        doc.setFillColor(...colors.white);
-        doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 120, 12, 12, 'FD');
+        const theme = State.data.theme || {};
+        doc.text(`Thème: ${theme.title || 'Non défini'}`, 20, 70);
         
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...colors.primary);
-        doc.text('VUE D\'ENSEMBLE', margin + 20, yPos + 25);
-
-        // Stats grid
         const stats = [
-          { label: 'Articles', value: State.data.articles.length, color: colors.primary },
-          { label: 'Épisodes', value: State.data.episodes.length, color: colors.warning },
-          { label: 'Tâches', value: State.data.tasks.length, color: colors.secondary },
-          { label: 'Contacts', value: State.data.contacts.length, color: colors.success }
+          `Articles: ${State.data.articles.length}`,
+          `Épisodes: ${State.data.episodes.length}`,
+          `Tâches: ${State.data.tasks.length}`,
+          `Contacts: ${State.data.contacts.length}`
         ];
-
-        const statWidth = (pageWidth - 2 * margin - 80) / 4;
+        
         stats.forEach((stat, i) => {
-          const x = margin + 20 + i * (statWidth + 10);
-          const y = yPos + 45;
-          
-          // Stat card
-          doc.setFillColor(250, 250, 252);
-          doc.roundedRect(x, y, statWidth, 50, 6, 6, 'F');
-          
-          // Value
-          doc.setFontSize(24);
-          doc.setFont('helvetica', 'bold');
-          doc.setTextColor(...stat.color);
-          doc.text(stat.value.toString(), x + statWidth/2, y + 25, { align: 'center' });
-          
-          // Label
-          doc.setFontSize(10);
-          doc.setTextColor(...colors.muted);
-          doc.text(stat.label.toUpperCase(), x + statWidth/2, y + 40, { align: 'center' });
+          doc.text(stat, 20, 90 + (i * 10));
         });
-
-        yPos += 140;
-
-        // Task Statistics
-        const tasks = State.data.tasks;
-        const taskStats = {
-          total: tasks.length,
-          done: tasks.filter(t => t.status === 'Terminé').length,
-          inProgress: tasks.filter(t => t.status === 'En cours').length,
-          todo: tasks.filter(t => t.status === 'À faire').length,
-          high: tasks.filter(t => t.priority === 'Haute').length,
-          overdue: tasks.filter(t => t.status !== 'Terminé' && t.due && new Date(t.due) < new Date()).length
-        };
-
-        doc.setFillColor(...colors.white);
-        doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 140, 12, 12, 'FD');
         
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...colors.primary);
-        doc.text('ANALYSE DES TÂCHES', margin + 20, yPos + 25);
-
-        // Progress bar
-        const progressWidth = pageWidth - 2 * margin - 40;
-        const completionRate = taskStats.total > 0 ? (taskStats.done / taskStats.total) : 0;
-        
-        doc.setFillColor(240, 240, 245);
-        doc.roundedRect(margin + 20, yPos + 40, progressWidth, 8, 4, 4, 'F');
-        
-        if (completionRate > 0) {
-          doc.setFillColor(...colors.success);
-          doc.roundedRect(margin + 20, yPos + 40, progressWidth * completionRate, 8, 4, 4, 'F');
-        }
-
-        doc.setFontSize(11);
-        doc.setTextColor(...colors.secondary);
-        doc.text(`${Math.round(completionRate * 100)}% complété`, margin + 20, yPos + 60);
-
-        // Task breakdown
-        const taskBreakdown = [
-          { label: 'Terminées', value: taskStats.done, color: colors.success },
-          { label: 'En cours', value: taskStats.inProgress, color: colors.warning },
-          { label: 'À faire', value: taskStats.todo, color: colors.muted },
-          { label: 'Priorité haute', value: taskStats.high, color: colors.danger },
-          { label: 'En retard', value: taskStats.overdue, color: colors.danger }
-        ];
-
-        const breakdownCols = 3;
-        taskBreakdown.forEach((item, i) => {
-          const col = i % breakdownCols;
-          const row = Math.floor(i / breakdownCols);
-          const x = margin + 20 + col * 160;
-          const y = yPos + 80 + row * 20;
-          
-          doc.setFillColor(...item.color);
-          doc.circle(x, y, 3, 'F');
-          
-          doc.setFontSize(10);
-          doc.setTextColor(...colors.secondary);
-          doc.text(`${item.label}: ${item.value}`, x + 10, y + 2);
-        });
-
-        yPos += 160;
-
-        // Upcoming deadlines
-        const upcomingTasks = tasks
-          .filter(t => t.status !== 'Terminé' && t.due)
-          .sort((a, b) => new Date(a.due) - new Date(b.due))
-          .slice(0, 5);
-
-        if (upcomingTasks.length > 0) {
-          doc.setFillColor(...colors.white);
-          doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 20 + upcomingTasks.length * 16 + 20, 12, 12, 'FD');
-          
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          doc.setTextColor(...colors.primary);
-          doc.text('PROCHAINES ÉCHÉANCES', margin + 20, yPos + 25);
-
-          upcomingTasks.forEach((task, i) => {
-            const y = yPos + 45 + i * 16;
-            const dueDate = new Date(task.due);
-            const isOverdue = dueDate < new Date();
-            
-            // Priority indicator
-            const priorityColor = task.priority === 'Haute' ? colors.danger : 
-                                task.priority === 'Moyenne' ? colors.warning : colors.muted;
-            doc.setFillColor(...priorityColor);
-            doc.circle(margin + 25, y - 3, 2, 'F');
-            
-            // Task info
-            doc.setFontSize(10);
-            doc.setTextColor(isOverdue ? colors.danger : colors.secondary);
-            doc.setFont('helvetica', isOverdue ? 'bold' : 'normal');
-            
-            const taskText = `${task.due} • ${task.title}`;
-            const assignees = task.assignees && task.assignees.length > 0 ? ` (${task.assignees.join(', ')})` : '';
-            
-            doc.text(taskText, margin + 35, y);
-            doc.setTextColor(...colors.muted);
-            doc.setFont('helvetica', 'normal');
-            doc.text(assignees, margin + 35 + doc.getTextWidth(taskText), y);
-          });
-          
-          yPos += 20 + upcomingTasks.length * 16 + 40;
-        }
-
-        // Check if we need a new page
-        if (yPos > pageHeight - 200) {
-          doc.addPage();
-          yPos = margin;
-        }
-
-        // Detailed tables
-        if (tasks.length > 0) {
-          // Tasks table
-          const taskRows = tasks.map(t => [
-            t.title,
-            t.status,
-            t.priority,
-            (t.assignees || []).join(', ') || '—',
-            t.due || '—',
-            (t.notes || '').substring(0, 60) + (t.notes && t.notes.length > 60 ? '...' : '')
-          ]);
-
-          doc.autoTable({
-            startY: yPos,
-            head: [['Tâche', 'Statut', 'Priorité', 'Assigné(s)', 'Échéance', 'Notes']],
-            body: taskRows,
-            styles: {
-              fontSize: 9,
-              cellPadding: 8,
-              lineColor: colors.background,
-              lineWidth: 0.5
-            },
-            headStyles: {
-              fillColor: colors.primary,
-              textColor: colors.white,
-              fontStyle: 'bold',
-              fontSize: 10
-            },
-            alternateRowStyles: {
-              fillColor: [250, 250, 252]
-            },
-            columnStyles: {
-              0: { cellWidth: 120 },
-              1: { cellWidth: 60, halign: 'center' },
-              2: { cellWidth: 60, halign: 'center' },
-              3: { cellWidth: 80 },
-              4: { cellWidth: 70, halign: 'center' },
-              5: { cellWidth: 120 }
-            },
-            margin: { left: margin, right: margin },
-            didParseCell: function(data) {
-              if (data.row.index >= 0 && data.column.index === 1) {
-                // Status column coloring
-                const status = data.cell.raw;
-                if (status === 'Terminé') data.cell.styles.textColor = colors.success;
-                else if (status === 'En cours') data.cell.styles.textColor = colors.warning;
-                else data.cell.styles.textColor = colors.muted;
-              }
-              if (data.row.index >= 0 && data.column.index === 2) {
-                // Priority column coloring
-                const priority = data.cell.raw;
-                if (priority === 'Haute') data.cell.styles.textColor = colors.danger;
-                else if (priority === 'Moyenne') data.cell.styles.textColor = colors.warning;
-                else data.cell.styles.textColor = colors.muted;
-              }
-            }
-          });
-
-          yPos = doc.lastAutoTable.finalY + 30;
-        }
-
-        // Contacts table
-        if (State.data.contacts.length > 0) {
-          const contactRows = State.data.contacts.map(c => [
-            c.name,
-            c.type,
-            c.status,
-            c.priority,
-            c.email || '—',
-            c.social || '—'
-          ]);
-
-          doc.autoTable({
-            startY: yPos,
-            head: [['Nom', 'Type', 'Statut', 'Priorité', 'Email', 'Réseaux']],
-            body: contactRows,
-            styles: {
-              fontSize: 9,
-              cellPadding: 8,
-              lineColor: colors.background,
-              lineWidth: 0.5
-            },
-            headStyles: {
-              fillColor: colors.secondary,
-              textColor: colors.white,
-              fontStyle: 'bold',
-              fontSize: 10
-            },
-            alternateRowStyles: {
-              fillColor: [250, 250, 252]
-            },
-            columnStyles: {
-              0: { cellWidth: 100 },
-              1: { cellWidth: 80, halign: 'center' },
-              2: { cellWidth: 80, halign: 'center' },
-              3: { cellWidth: 60, halign: 'center' },
-              4: { cellWidth: 120 },
-              5: { cellWidth: 100 }
-            },
-            margin: { left: margin, right: margin },
-            didParseCell: function(data) {
-              if (data.row.index >= 0 && data.column.index === 2) {
-                // Status column coloring
-                const status = data.cell.raw;
-                if (status === 'En contact') data.cell.styles.textColor = colors.success;
-                else if (status === 'À contacter') data.cell.styles.textColor = colors.warning;
-                else data.cell.styles.textColor = colors.muted;
-              }
-            }
-          });
-        }
-
-        // Footer on all pages
-        const pageCount = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= pageCount; i++) {
-          doc.setPage(i);
-          
-          // Footer line
-          doc.setDrawColor(...colors.background);
-          doc.line(margin, pageHeight - 40, pageWidth - margin, pageHeight - 40);
-          
-          // Footer text
-          doc.setFontSize(9);
-          doc.setTextColor(...colors.muted);
-          doc.text(
-            `© Regards Croisés • Rapport généré le ${dateStr}`,
-            margin,
-            pageHeight - 20
-          );
-          doc.text(
-            `Page ${i}/${pageCount}`,
-            pageWidth - margin,
-            pageHeight - 20,
-            { align: 'right' }
-          );
-        }
-
-        // Save the PDF
-        const filename = `RC-Rapport-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}.pdf`;
-        doc.save(filename);
-        
-        toast('📄 Rapport PDF exporté avec succès');
+        doc.save(`RC-Rapport-${Date.now()}.pdf`);
+        toast('PDF exporté avec succès');
       } catch (error) {
         console.error('Erreur PDF:', error);
-        toast('❌ Erreur lors de l\'export PDF');
+        toast('Erreur lors de l\'export PDF');
       }
     }
 
