@@ -1,0 +1,21 @@
+{
+  "name": "Regards Crois\u00e9s \u2014 Media Manager",
+  "short_name": "RC Media",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0a1e3a",
+  "theme_color": "#0a1e3a",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

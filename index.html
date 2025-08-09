@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Regards Croisés — Media Manager (PWA)</title>
+  <meta name="theme-color" content="#0a1e3a" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192">
+  <style>
+    :root{
+      --bg:#071427; --card:#0d1e3a; --muted:#b7c6dc; --text:#f5f9ff;
+      --brand:#2f7fef; --brand-2:#7ac3ff;
+      --line:#18406e; --danger:#ef4444; --warn:#f59e0b;
+      --radius:18px; --shadow:0 14px 30px rgba(4,12,24,.28);
+    }
+    /* Light theme overrides */
+    [data-theme="light"]{
+      --bg:#f6fbff; --card:#ffffff; --muted:#5a708c; --text:#0a1e3a;
+      --brand:#0b4abf; --brand-2:#69b7ff; --line:#e6edf6; --shadow:0 10px 24px rgba(8,18,36,.12);
+    }
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);background:radial-gradient(1200px 600px at -10% -10%, #0a2d62 0, transparent 60%), linear-gradient(180deg,var(--bg),#0b1830);}
+    [data-theme="light"] body{ background: linear-gradient(180deg,var(--bg),#e9f3ff); }
+    .container{max-width:980px;margin:auto;padding:16px}
+    header{position:sticky;top:0;z-index:3;background:linear-gradient(180deg, rgba(10,29,58,.9), rgba(10,29,58,.7));backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line)}
+    [data-theme="light"] header{ background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.7)); }
+    .brand{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px}
+    .brand-left{display:flex;gap:12px;align-items:center}
+    .logo{height:42px;width:42px;border-radius:12px; background:linear-gradient(135deg,var(--brand),var(--brand-2)); display:grid;place-items:center;font-weight:800;color:#001228; box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+    h1{font-size:18px;margin:0;letter-spacing:.4px}
+    .sub{font-size:12px;color:var(--muted)}
+    .bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:8px 16px}
+    .tab{appearance:none;border:0;border-radius:14px;padding:10px 12px;color:var(--text);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));box-shadow:inset 0 0 0 1px var(--line);font-weight:700}
+    .tab[aria-selected="true"]{background:linear-gradient(135deg,rgba(42,124,255,.2),rgba(122,195,255,.18));box-shadow:inset 0 0 0 2px rgba(42,124,255,.6)}
+    .hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(135deg,#0a2d62,#18406e);box-shadow:var(--shadow);}
+    .hero img{width:100%;height:auto;display:block;opacity:.85}
+    .hero .overlay{position:absolute;inset:0;background:linear-gradient(120deg,rgba(9,20,45,.6),rgba(2,10,24,.2))}
+    .hero h2{position:absolute;left:18px;bottom:18px;margin:0;font-size:28px;line-height:1.1}
+    .grid{display:grid;gap:14px}
+    @media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;border:1px solid var(--line)}
+    .card h3{margin:0 0 8px 0;font-size:16px}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .tag{font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(122,195,255,.12);border:1px solid rgba(122,195,255,.35);color:var(--text)}
+    form{display:grid;gap:10px;margin:12px 0}
+    input, textarea, select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--text)}
+    textarea{min-height:100px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    button{cursor:pointer;border:0;padding:12px 14px;border-radius:12px;font-weight:800;letter-spacing:.2px}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#001228}
+    .btn-outline{background:transparent;box-shadow:inset 0 0 0 2px var(--line);color:var(--text)}
+    .btn-danger{background:var(--danger);color:white}
+    .btn-warn{background:var(--warn);color:black}
+    .hidden{display:none}
+    .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+    .toolbar input{flex:1}
+    .pill{padding:6px 10px;border-radius:999px;background:rgba(122,195,255,.16);border:1px solid rgba(122,195,255,.35)}
+    footer{padding:24px;color:var(--muted);text-align:center}
+    .install{position:fixed;bottom:16px;right:16px}
+    .theme-toggle{display:inline-flex;gap:8px;align-items:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand container" role="banner">
+      <div class="brand-left">
+        <div class="logo" aria-hidden="true">RC</div>
+        <div>
+          <h1>Regards Croisés — Media Manager</h1>
+          <div class="sub">Mobile‑first • PWA • Visuel bleu/blanc</div>
+        </div>
+      </div>
+      <div class="theme-toggle">
+        <span class="sub">Thème</span>
+        <button id="btn-theme" class="tab" style="padding:8px 12px">Sombre</button>
+      </div>
+    </div>
+    <nav class="bar container" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" aria-selected="true" data-tab="home">Accueil</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="articles">Articles</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="episodes">Podcasts</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="settings">Sauvegarde</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="tab-home">
+      <div class="hero card" aria-label="bannière">
+        <img src="media/cover.jpg" alt="Regards Croisés — bannière"/>
+        <div class="overlay"></div>
+        <h2>Regards croisés — Les conflits vus par les opprimés</h2>
+      </div>
+      <div class="grid" style="margin-top:8px">
+        <div class="card">
+          <h3>Intention éditoriale</h3>
+          <p class="muted">• Témoignages authentiques • Réflexion engagée & pédagogique • Compréhension, nuance & empathie • Décentrer le regard occidental.</p>
+        </div>
+        <div class="card">
+          <h3>Tips</h3>
+          <p class="muted">• Export JSON régulier • Import sur un autre appareil • Bouton « Installer » pour l’icône d’application.</p>
+          <div class="row" style="margin-top:6px">
+            <span class="pill">Offline</span><span class="pill">Installable</span><span class="pill">Pages statiques</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-articles" class="hidden" aria-labelledby="Articles">
+      <div class="card">
+        <h3>Ajouter / éditer un article</h3>
+        <form id="article-form" aria-label="Formulaire article">
+          <input type="hidden" id="article-id" />
+          <label>Titre<input id="article-title" required maxlength="120" placeholder="Titre de l’article"/></label>
+          <label>Tags (séparés par des virgules)<input id="article-tags" placeholder="ex: société, conflit, témoignage"/></label>
+          <label>Résumé<textarea id="article-summary" placeholder="Quelques lignes…"></textarea></label>
+          <div class="actions">
+            <button type="submit" class="btn-primary">Enregistrer</button>
+            <button type="button" id="article-reset" class="btn-outline">Annuler</button>
+          </div>
+        </form>
+      </div>
+      <div class="toolbar">
+        <input id="article-search" placeholder="Recherche titre / tag / résumé…" aria-label="Rechercher"/>
+        <button id="article-clear" class="btn-outline" title="Tout supprimer" aria-label="Tout supprimer">Vider la liste</button>
+      </div>
+      <div id="article-list" class="grid" aria-live="polite"></div>
+    </section>
+
+    <section id="tab-episodes" class="hidden">
+      <div class="card">
+        <h3>Ajouter / éditer un épisode</h3>
+        <form id="ep-form" aria-label="Formulaire épisode">
+          <input type="hidden" id="ep-id" />
+          <label>Titre de l’épisode<input id="ep-title" required maxlength="120" placeholder="Vivre sous le conflit — Quotidien…"/></label>
+          <label>Invité(s)<input id="ep-guests" placeholder="ex: journaliste, réfugié, ONG…"/></label>
+          <label>Thème / Foyer du conflit<input id="ep-theme" placeholder="ex: Goma, RDC; femmes et guerre; exil…"/></label>
+          <label>URL image (optionnel)<input id="ep-image" type="url" placeholder="https://… ou laisse vide pour la démo"/></label>
+          <label>URL audio (optionnel)<input id="ep-audio" type="url" placeholder="https://… ou laisse vide pour la démo"/></label>
+          <div class="actions">
+            <button type="submit" class="btn-primary">Enregistrer</button>
+            <button type="button" id="ep-reset" class="btn-outline">Annuler</button>
+          </div>
+        </form>
+      </div>
+      <div class="toolbar">
+        <input id="ep-search" placeholder="Recherche titre / invité / thème…" aria-label="Rechercher"/>
+        <button id="ep-clear" class="btn-outline" title="Tout supprimer">Vider la liste</button>
+      </div>
+      <div id="ep-list" class="grid" aria-live="polite"></div>
+    </section>
+
+    <section id="tab-settings" class="hidden">
+      <div class="card">
+        <h3>Export / Import</h3>
+        <div class="row" style="margin:8px 0">
+          <button id="btn-export" class="btn-primary">Exporter les données (JSON)</button>
+          <label class="btn-outline" for="file-import" style="display:inline-grid;place-items:center">Importer un JSON<input id="file-import" type="file" accept="application/json" style="display:none"></label>
+          <button id="btn-demo" class="btn-warn">Recréer données démo</button>
+          <button id="btn-reset" class="btn-danger">Réinitialiser tout</button>
+        </div>
+        <p class="muted">Astuce : exporte régulièrement un backup JSON.</p>
+      </div>
+    </section>
+  </main>
+
+  <button id="btn-install" class="btn-primary install hidden">Installer l’app</button>
+
+  <footer>
+    <small>© <span id="year"></span> Regards Croisés · PWA GitHub Pages</small>
+  </footer>
+
+  <script>
+    const KEY = 'rc-data-v2';
+    const THEME_KEY = 'rc-theme';
+    const $ = s => document.querySelector(s);
+    const State = {
+      data: { articles: [], episodes: [] },
+      save(){ localStorage.setItem(KEY, JSON.stringify(this.data)); },
+      load(){ const raw = localStorage.getItem(KEY); this.data = raw ? JSON.parse(raw) : { articles: [], episodes: [] }; }
+    };
+    // Theme handling
+    function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); $('#btn-theme').textContent = (t==='light' ? 'Clair' : 'Sombre'); localStorage.setItem(THEME_KEY, t); }
+    function toggleTheme(){ const cur = document.documentElement.getAttribute('data-theme') || 'dark'; applyTheme(cur==='dark' ? 'light' : 'dark'); }
+    // Helpers
+    function uid(){ return Math.random().toString(36).slice(2,9); }
+    function stringifyTags(v){ return (v||'').split(',').map(t=>t.trim()).filter(Boolean); }
+    function matches(q, ...fields){ q=q.toLowerCase(); return fields.some(f => (f||'').toLowerCase().includes(q)); }
+    function selectTab(name){
+      document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected', String(b.dataset.tab===name)));
+      document.querySelectorAll('main section').forEach(sec=>sec.classList.add('hidden'));
+      document.querySelector('#tab-'+name).classList.remove('hidden');
+    }
+    // Articles
+    function renderArticles(list=State.data.articles){
+      const q = $('#article-search').value.trim().toLowerCase();
+      const filtered = q ? list.filter(a => matches(q,a.title,a.summary,(a.tags||[]).join(','))) : list;
+      const wrap = $('#article-list'); wrap.innerHTML = '';
+      if(!filtered.length){ wrap.innerHTML = `<div class="card muted">Aucun article.</div>`; return; }
+      for(const a of filtered){
+        const el = document.createElement('div'); el.className = 'card';
+        el.innerHTML = `<h3>${a.title}</h3><p class="muted">${a.summary||''}</p>
+          <div class="row" style="margin:6px 0">${(a.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
+          <div class="actions"><button class="btn-outline" data-edit="${a.id}">Éditer</button>
+          <button class="btn-danger" data-del="${a.id}">Supprimer</button></div>`;
+        wrap.appendChild(el);
+      }
+      wrap.querySelectorAll('[data-edit]').forEach(btn=>btn.onclick=()=>editArticle(btn.dataset.edit));
+      wrap.querySelectorAll('[data-del]').forEach(btn=>btn.onclick=()=>delArticle(btn.dataset.del));
+    }
+    function editArticle(id){
+      const a = State.data.articles.find(x=>x.id===id); if(!a) return;
+      $('#article-id').value = a.id; $('#article-title').value = a.title;
+      $('#article-tags').value = (a.tags||[]).join(', '); $('#article-summary').value = a.summary || '';
+      window.scrollTo({top:0,behavior:'smooth'}); selectTab('articles');
+    }
+    function delArticle(id){ if(!confirm('Supprimer cet article ?')) return;
+      State.data.articles = State.data.articles.filter(x=>x.id!==id); State.save(); renderArticles(); }
+    // Episodes
+    function renderEpisodes(list=State.data.episodes){
+      const q = $('#ep-search').value.trim().toLowerCase();
+      const filtered = q ? list.filter(e => matches(q,e.title,e.guests,e.theme)) : list;
+      const wrap = $('#ep-list'); wrap.innerHTML = '';
+      if(!filtered.length){ wrap.innerHTML = `<div class="card muted">Aucun épisode.</div>`; return; }
+      for(const e of filtered){
+        const el = document.createElement('div'); el.className = 'card';
+        const img = e.image ? `<img src="${e.image}" alt="visuel épisode" style="width:100%;height:auto;border-radius:12px;margin-bottom:8px;border:1px solid var(--line)"/>` : '';
+        const audio = e.audio ? `<audio controls style="width:100%;margin-top:8px"><source src="${e.audio}"></audio>` : '';
+        el.innerHTML = `${img}<h3>${e.title}</h3>
+          <p class="muted">Invité(s) : ${e.guests||'—'} • Thème : ${e.theme||'—'}</p>
+          ${e.link ? `<a class="btn-outline" href="${e.link}" target="_blank" rel="noopener">Écouter</a>`:''}
+          ${audio}
+          <div class="actions" style="margin-top:8px">
+            <button class="btn-outline" data-ep-edit="${e.id}">Éditer</button>
+            <button class="btn-danger" data-ep-del="${e.id}">Supprimer</button></div>`;
+        wrap.appendChild(el);
+      }
+      wrap.querySelectorAll('[data-ep-edit]').forEach(btn=>btn.onclick=()=>editEpisode(btn.dataset.epEdit));
+      wrap.querySelectorAll('[data-ep-del]').forEach(btn=>btn.onclick=()=>delEpisode(btn.dataset.epDel));
+    }
+    function editEpisode(id){
+      const e = State.data.episodes.find(x=>x.id===id); if(!e) return;
+      $('#ep-id').value = e.id; $('#ep-title').value = e.title; $('#ep-guests').value = e.guests||'';
+      $('#ep-theme').value = e.theme||''; $('#ep-link').value = e.link||'';
+      $('#ep-image').value = e.image||''; $('#ep-audio').value = e.audio||'';
+      window.scrollTo({top:0,behavior:'smooth'}); selectTab('episodes');
+    }
+    function delEpisode(id){ if(!confirm('Supprimer cet épisode ?')) return;
+      State.data.episodes = State.data.episodes.filter(x=>x.id!==id); State.save(); renderEpisodes(); }
+    // Export / Import
+    function download(filename, text){ const blob = new Blob([text], {type:'application/json'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url); }
+    function exportData(){ download('regards-croises-backup.json', JSON.stringify(State.data, null, 2)); }
+    async function importData(file){
+      const text = await file.text();
+      try{ const data = JSON.parse(text);
+        if(!data || !Array.isArray(data.articles) || !Array.isArray(data.episodes)) throw new Error('format');
+        State.data = data; State.save(); renderArticles(); renderEpisodes(); alert('Import réussi !');
+      }catch(e){ alert('Fichier invalide.'); }
+    }
+    // Demo data with local media
+    function seedDemo(){
+      State.data = {
+        articles: [
+          { id: uid(), title:'Pourquoi « Regards croisés » ? — Intention éditoriale', tags:['éditorial','méthode','apolitique'], summary:'Témoignages authentiques, nuance, contre‑récit humanisant.' },
+          { id: uid(), title:'Produire un épisode court (4–5 min)', tags:['production','podcast'], summary:'Repérage, consentement, fact‑checking, montage responsable.' }
+        ],
+        episodes: [
+          { id: uid(), title:'Épisode 1 — Vivre sous le conflit : le quotidien des opprimés', guests:'citoyen·ne, journaliste local·e', theme:'Goma (RDC) — résilience au quotidien', link:'', image:'media/cover.jpg', audio:'media/sample.wav' },
+          { id: uid(), title:'Épisode 2 — Femmes et guerre : résistances invisibles', guests:'militante, psychologue communautaire', theme:'Genre et conflits', link:'', image:'media/cover.jpg', audio:'' }
+        ]
+      };
+      State.save(); renderArticles(); renderEpisodes();
+    }
+    // Init
+    function init(){
+      // theme
+      const t = localStorage.getItem(THEME_KEY) || 'dark'; applyTheme(t);
+      $('#btn-theme').onclick = toggleTheme;
+
+      // storage
+      State.load(); if(!State.data.articles.length && !State.data.episodes.length) seedDemo();
+      renderArticles(); renderEpisodes();
+      document.querySelector('#year').textContent = new Date().getFullYear();
+
+      // Tabs
+      document.querySelectorAll('.tab').forEach(btn=>btn.onclick=()=>selectTab(btn.dataset.tab));
+
+      // Article form
+      document.querySelector('#article-form').addEventListener('submit', e=>{
+        e.preventDefault(); const id = document.querySelector('#article-id').value || uid();
+        const entry = { id, title: document.querySelector('#article-title').value.trim(),
+          tags: stringifyTags(document.querySelector('#article-tags').value),
+          summary: document.querySelector('#article-summary').value.trim() };
+        if(!entry.title){ alert('Titre requis'); return; }
+        const ix = State.data.articles.findIndex(a=>a.id===id);
+        if(ix>-1) State.data.articles[ix]=entry; else State.data.articles.unshift(entry); State.save();
+        e.target.reset(); document.querySelector('#article-id').value=''; renderArticles();
+      });
+      document.querySelector('#article-reset').onclick=()=>{ document.querySelector('#article-form').reset(); document.querySelector('#article-id').value=''; };
+      document.querySelector('#article-search').oninput=()=>renderArticles();
+      document.querySelector('#article-clear').onclick=()=>{ if(confirm('Supprimer tous les articles ?')){ State.data.articles=[]; State.save(); renderArticles(); }};
+
+      // Episode form
+      document.querySelector('#ep-form').addEventListener('submit', e=>{
+        e.preventDefault(); const id = document.querySelector('#ep-id').value || uid();
+        const entry = { id, title: document.querySelector('#ep-title').value.trim(),
+          guests: document.querySelector('#ep-guests').value.trim(),
+          theme: document.querySelector('#ep-theme').value.trim(),
+          link: document.querySelector('#ep-link').value.trim(),
+          image: document.querySelector('#ep-image').value.trim(),
+          audio: document.querySelector('#ep-audio').value.trim() };
+        if(!entry.title){ alert('Titre requis'); return; }
+        const ix = State.data.episodes.findIndex(a=>a.id===id);
+        if(ix>-1) State.data.episodes[ix]=entry; else State.data.episodes.unshift(entry); State.save();
+        e.target.reset(); document.querySelector('#ep-id').value=''; renderEpisodes();
+      });
+      document.querySelector('#ep-reset').onclick=()=>{ document.querySelector('#ep-form').reset(); document.querySelector('#ep-id').value=''; };
+      document.querySelector('#ep-search').oninput=()=>renderEpisodes();
+      document.querySelector('#ep-clear').onclick=()=>{ if(confirm('Supprimer tous les épisodes ?')){ State.data.episodes=[]; State.save(); renderEpisodes(); }};
+
+      // Backup
+      document.querySelector('#btn-export').onclick=exportData;
+      document.querySelector('#file-import').onchange=e=>{ const f=e.target.files[0]; if(f) importData(f); e.target.value=''; };
+      document.querySelector('#btn-reset').onclick=()=>{ if(confirm('Tout réinitialiser ?')){ localStorage.removeItem(KEY); State.load(); renderArticles(); renderEpisodes(); }};
+      document.querySelector('#btn-demo').onclick=()=>{ if(confirm('Écraser les données actuelles ?')) seedDemo(); };
+    }
+    document.addEventListener('DOMContentLoaded', init);
+
+    // PWA: install prompt + sw registration
+    let deferredPrompt;
+    const installBtn = document.getElementById('btn-install');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); deferredPrompt = e; installBtn.classList.remove('hidden');
+    });
+    installBtn.addEventListener('click', async () => {
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null; installBtn.classList.add('hidden');
+    });
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+    }
+  </script>
+</body>
+</html>
