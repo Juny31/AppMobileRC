@@ -1,140 +1,2067 @@
-
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Regards Croisés — Série & média</title>
-  <meta name="theme-color" content="#f5f5f7"/>
+  <title>Regards Croisés — App</title>
+  <meta name="theme-color" content="#1d1d1f"/>
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <style>
-    :root{
-      --bg:#f5f5f7; --card:#ffffff; --text:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --accent:#0071e3;
-      --space-xs:8px; --space-sm:12px; --space-md:20px; --space-lg:32px; --space-xl:48px; --space-2xl:72px; --space-3xl:108px;
-      --radius:24px;
+    :root {
+      --bg: #000000;
+      --bg-secondary: #1d1d1f;
+      --bg-tertiary: #2d2d30;
+      --card: #161618;
+      --card-hover: #1f1f23;
+      --text: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-muted: #6e6e73;
+      --border: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --success: #28cd41;
+      --warning: #ff9f0a;
+      --danger: #ff3b30;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --shadow-lg: rgba(0, 0, 0, 0.5);
+      --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 20px;
+      --space-lg: 32px;
+      --space-xl: 48px;
+      --space-2xl: 72px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.54}
-    a{color:var(--accent);text-decoration:none}
-    header{position:sticky;top:0;z-index:10;backdrop-filter:saturate(180%) blur(16px);background:color-mix(in srgb, var(--bg) 70%, transparent);border-bottom:1px solid var(--line)}
-    .container{max-width:1200px;margin:auto;padding:0 var(--space-lg)}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:var(--space-md) 0}
-    .left{display:flex;align-items:center;gap:var(--space-sm)}
-    .logo{width:40px;height:40px;border-radius:12px}
-    .links a{margin:0 var(--space-sm);color:var(--text)}
-    .cta{border:1px solid var(--line);padding:12px 18px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700}
-    section{padding: var(--space-2xl) 0}
-    .hero{display:grid;gap:var(--space-xl);grid-template-columns:1fr;align-items:center}
-    @media(min-width:980px){.hero{grid-template-columns: 1.2fr .8fr}}
-    .h-kicker{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);margin-bottom:var(--space-sm)}
-    .h-title{font-size: clamp(40px, 5.5vw, 68px); line-height:1.08; letter-spacing:-.02em; margin:0 0 var(--space-md)}
-    .h-sub{font-size: clamp(18px, 2.2vw, 22px); color:var(--muted); margin: 0 0 var(--space-lg)}
-    .hero img{width:100%;height:auto;border:1px solid var(--line);border-radius:28px;box-shadow:0 10px 44px rgba(0,0,0,.08)}
-    .bento{display:grid;gap:var(--space-lg);grid-template-columns:1fr}
-    @media(min-width:1020px){.bento{grid-template-columns: 2fr 1fr 1fr}}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-lg);box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.08)}
-    .card h3{margin:.2rem 0 .6rem;font-size: clamp(20px, 2.2vw, 24px)}
-    .muted{color:var(--muted)}
-    .pill{border:1px solid var(--line);padding:8px 12px;border-radius:999px}
-    .cols{display:grid;gap:var(--space-lg);grid-template-columns:1fr}
-    @media(min-width:980px){.cols{grid-template-columns:1fr 1fr}}
-    footer{padding: var(--space-xl) 0; border-top:1px solid var(--line); color:var(--muted); margin-top:var(--space-xl)}
+
+    [data-theme="light"] {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-tertiary: #f2f2f7;
+      --card: #ffffff;
+      --card-hover: #f5f5f7;
+      --text: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-muted: #8e8e93;
+      --border: rgba(0, 0, 0, 0.1);
+      --border-hover: rgba(0, 0, 0, 0.2);
+      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow-lg: rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+      transition: all 0.3s ease;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(20px);
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 1px solid var(--border);
+    }
+
+    [data-theme="light"] header {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: auto;
+      padding: 0 var(--space-lg);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md) 0;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius);
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .bar {
+      display: flex;
+      gap: var(--space-xs);
+      padding: var(--space-sm) 0 var(--space-md);
+      border-top: 1px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .seg {
+      appearance: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .seg:hover {
+      background: var(--card-hover);
+      border-color: var(--border-hover);
+    }
+
+    .seg[aria-selected="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+    }
+
+    /* Main Content */
+    main {
+      padding: var(--space-xl) 0;
+      min-height: calc(100vh - 200px);
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    @media(min-width: 980px) {
+      .grid {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .card:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--shadow-lg);
+    }
+
+    .card h3 {
+      margin: 0 0 var(--space-md);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Form Elements */
+    input, textarea, select {
+      width: 100%;
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: var(--bg-secondary);
+      color: var(--text);
+      font-size: 14px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+      background: var(--card);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    label {
+      display: block;
+      margin-bottom: var(--space-md);
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* Buttons */
+    .btn {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      color: var(--text);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: var(--card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #d70015;
+      box-shadow: 0 4px 15px rgba(255, 59, 48, 0.3);
+    }
+
+    .actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: var(--space-md);
+    }
+
+    /* Status Elements */
+    .pill {
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 6px var(--space-sm);
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+
+    .status {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .progress {
+      height: 8px;
+      background: var(--bg-secondary);
+      border-radius: 50px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress > div {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    /* Kanban */
+    .kanban {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    @media(min-width: 980px) {
+      .kanban {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .col {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      min-height: 200px;
+      background: var(--bg-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .col:hover {
+      border-color: var(--border-hover);
+      background: var(--card);
+    }
+
+    .col h4 {
+      margin: 0 0 var(--space-md);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kan-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-sm);
+      background: var(--card);
+      margin-bottom: var(--space-sm);
+      cursor: grab;
+      transition: all 0.2s ease;
+    }
+
+    .kan-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .kan-card:active {
+      cursor: grabbing;
+    }
+
+    /* Utilities */
+    .hidden {
+      display: none !important;
+    }
+
+    .muted {
+      color: var(--text-muted);
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: var(--space-lg);
+      transform: translateX(-50%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 50px;
+      opacity: 0;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 30px var(--shadow-lg);
+      font-weight: 500;
+      z-index: 1000;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* Footer */
+    footer {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      margin-top: var(--space-2xl);
+      background: var(--bg-secondary);
+      text-align: center;
+    }
+
+    /* Install Button */
+    #btn-install {
+      position: fixed;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 1000;
+      box-shadow: 0 8px 30px var(--shadow-lg);
+      display: none;
+    }
+
+    /* Theme Toggle */
+    #btn-theme {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    #btn-theme:hover {
+      background: var(--card);
+      color: var(--text);
+    }
+
+    /* Search and Filters */
+    .search-container {
+      display: flex;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+      flex-wrap: wrap;
+    }
+
+    .search-container input {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-container select {
+      min-width: 180px;
+    }
+
+    /* Statistics Cards */
+    .stats-grid {
+      display: grid;
+      gap: var(--space-sm);
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      margin: var(--space-md) 0;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-sm);
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      background: var(--card);
+      transform: translateY(-1px);
+    }
+
+    .stat-card .number {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-card .label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 var(--space-md);
+      }
+      
+      .brand {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: stretch;
+      }
+      
+      .brand-left {
+        justify-content: center;
+      }
+      
+      .actions {
+        justify-content: center;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .card {
+        padding: var(--space-md);
+      }
+      
+      .search-container {
+        flex-direction: column;
+      }
+      
+      .search-container input,
+      .search-container select {
+        min-width: auto;
+      }
+    }
+
+    /* Form Groups */
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-row {
+      display: grid;
+      gap: var(--space-md);
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Loading States */
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* Animations */
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-in {
+      animation: slideIn 0.3s ease-out;
+    }
+
+    /* Enhanced Visual Elements */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge {
+      background: var(--accent);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge.success {
+      background: var(--success);
+    }
+
+    .badge.warning {
+      background: var(--warning);
+    }
+
+    .badge.danger {
+      background: var(--danger);
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="container nav">
-      <div class="left">
-        <img src="media/logo.svg" class="logo" alt="RC">
-        <strong>Regards Croisés</strong>
-        <nav class="links">
-          <a href="#theme">Thème</a>
-          <a href="#objectifs">Objectifs</a>
-          <a href="#format">Format</a>
-          <a href="#app">App</a>
-        </nav>
+    <div class="container brand">
+      <div class="brand-left">
+        <div class="logo">RC</div>
+        <div class="title"><h1>Regards Croisés — App</h1></div>
       </div>
-      <a class="cta" href="app.html">Ouvrir l’app</a>
+      <div class="actions">
+        <a class="btn" href="index.html">Accueil</a>
+        <button id="btn-theme" class="btn">🌙 Sombre</button>
+      </div>
+    </div>
+    <div class="container bar" role="tablist">
+      <button class="seg" aria-selected="true" data-tab="home">Accueil</button>
+      <button class="seg" data-tab="articles">Articles</button>
+      <button class="seg" data-tab="episodes">Podcasts</button>
+      <button class="seg" data-tab="tasks">Tâches</button>
+      <button class="seg" data-tab="contacts">Contacts</button>
+      <button class="seg" data-tab="settings">Réglages</button>
     </div>
   </header>
 
-  <main>
-    <section class="container hero" id="top">
-      <div>
-        <span class="h-kicker">Série & média</span>
-        <h1 class="h-title">Un regard croisé, humanisant et lucide.</h1>
-        <p class="h-sub">Gérez vos tâches, contacts, articles & podcasts. Exportez un PDF élégant avec un récapitulatif automatique des actions réalisées.</p>
-        <div>
-          <a class="cta" href="app.html">Ouvrir l’app</a>
-          <a class="pill" style="margin-left:12px" href="#app">Découvrir l’outil</a>
+  <main class="container">
+    <section id="tab-home">
+      <div class="grid">
+        <div class="card slide-in">
+          <div class="card-header">
+            <h3>Thème du mois</h3>
+            <span class="badge">Éditorial</span>
+          </div>
+          <form id="theme-form">
+            <div class="form-group">
+              <label>Titre</label>
+              <input id="theme-title" placeholder="ex: Résilience — Des voix qui s'élèvent">
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea id="theme-desc" placeholder="Angle éditorial du mois…"></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Enregistrer</button>
+            </div>
+          </form>
+          <p class="muted" id="theme-preview"></p>
+        </div>
+        <div class="card slide-in">
+          <div class="card-header">
+            <h3>Guidelines visuelles</h3>
+            <span class="badge success">Design</span>
+          </div>
+          <p class="muted">Interface sombre élégante, espaces généreux, cartes aérées, accent bleu #0071e3, typographie Apple SF Pro, animations fluides.</p>
+          <div class="stats-grid" style="margin-top: var(--space-md);">
+            <div class="stat-card">
+              <div class="number">12px</div>
+              <div class="label">Radius</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">32px</div>
+              <div class="label">Spacing</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">600</div>
+              <div class="label">Font Weight</div>
+            </div>
+          </div>
         </div>
       </div>
-      <img src="media/cover.jpg" alt="aperçu">
     </section>
 
-    <section class="container cols" id="theme">
-      <div class="card">
-        <h3>THEME — JUILLET · AOÛT</h3>
-        <p class="muted">Regards croisés — <b>les conflits vus par les opprimés</b>. À travers 5 épisodes, la série donne la parole à celles et ceux qu’on n’entend jamais : civils, femmes, réfugiés, résistants invisibles.</p>
+    <section id="tab-articles" class="hidden">
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Articles</h3>
+          <span class="badge" id="article-count">0</span>
+        </div>
+        <form id="article-form">
+          <input type="hidden" id="article-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Titre</label>
+              <input id="article-title" required>
+            </div>
+            <div class="form-group">
+              <label>Tags</label>
+              <input id="article-tags" placeholder="société, conflit…">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Résumé</label>
+            <textarea id="article-summary"></textarea>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <button type="button" id="article-reset" class="btn">Annuler</button>
+          </div>
+        </form>
       </div>
-      <div class="card">
-        <h3>Intention éditoriale</h3>
-        <ul class="muted">
-          <li>Mettre en avant les témoignages authentiques</li>
-          <li>Proposer une réflexion engagée et pédagogique</li>
-          <li>Favoriser la compréhension, la nuance et l'empathie</li>
-          <li>Décentrer le regard occidental sur les conflits</li>
-        </ul>
+      <div class="search-container">
+        <input id="article-search" placeholder="🔍 Recherche…">
+        <button id="article-clear" class="btn btn-danger">Vider la liste</button>
+      </div>
+      <div id="article-list" class="grid"></div>
+    </section>
+
+    <section id="tab-episodes" class="hidden">
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Podcasts</h3>
+          <span class="badge warning" id="episode-count">0</span>
+        </div>
+        <form id="ep-form">
+          <input type="hidden" id="ep-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Titre</label>
+              <input id="ep-title" required>
+            </div>
+            <div class="form-group">
+              <label>Invité(s)</label>
+              <input id="ep-guests">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Thème</label>
+              <input id="ep-theme">
+            </div>
+            <div class="form-group">
+              <label>Statut</label>
+              <select id="ep-status">
+                <option>Brouillon</option>
+                <option>Publié</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date</label>
+              <input id="ep-date" type="date">
+            </div>
+            <div class="form-group">
+              <label>Image (URL)</label>
+              <input id="ep-image" type="url">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Audio (URL)</label>
+              <input id="ep-audio" type="url">
+            </div>
+            <div class="form-group">
+              <label>Lien média</label>
+              <input id="ep-link" type="url">
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <button type="button" id="ep-reset" class="btn">Annuler</button>
+          </div>
+        </form>
+      </div>
+      <div class="search-container">
+        <input id="ep-search" placeholder="🔍 Recherche…">
+        <button id="ep-clear" class="btn btn-danger">Vider la liste</button>
+      </div>
+      <div id="ep-list" class="grid"></div>
+    </section>
+
+    <section id="tab-tasks" class="hidden">
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Tâches</h3>
+          <span class="badge" id="task-count">0</span>
+        </div>
+        <form id="task-form">
+          <input type="hidden" id="task-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Titre</label>
+              <input id="task-title" required placeholder="ex: Contacter journaliste…">
+            </div>
+            <div class="form-group">
+              <label>Statut</label>
+              <select id="task-status">
+                <option>À faire</option>
+                <option>En cours</option>
+                <option>Terminé</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Priorité</label>
+              <select id="task-priority">
+                <option>Haute</option>
+                <option>Moyenne</option>
+                <option>Basse</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Échéance</label>
+              <input id="task-due" type="date">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Assignée(s) 👥</label>
+            <select id="task-assignees" multiple size="4" title="Ctrl/Cmd + clic pour multi-sélection"></select>
+          </div>
+          <div class="actions">
+            <input id="team-new" placeholder="Ajouter un prénom (ex: Alex)" style="max-width:280px; margin-right: auto;">
+            <button id="team-add" type="button" class="btn">Ajouter au groupe</button>
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea id="task-notes"></textarea>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <button type="button" id="task-reset" class="btn">Annuler</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Statistiques</h3>
+          <div class="actions">
+            <button id="view-list" class="btn">📋 Liste</button>
+            <button id="view-kanban" class="btn">📊 Kanban</button>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="number" id="stat-task-total">0</div>
+            <div class="label">Total</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="stat-task-done">0</div>
+            <div class="label">Terminées</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="stat-task-high">0</div>
+            <div class="label">Haute priorité</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="stat-task-late">0</div>
+            <div class="label">En retard</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="stat-task-week">0</div>
+            <div class="label">≤ 7 jours</div>
+          </div>
+        </div>
+        <div class="progress" style="margin-top: var(--space-md);">
+          <div id="task-progress" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <input id="task-search" placeholder="🔍 Recherche titre / notes…">
+        <select id="task-sort">
+          <option value="updated">Tri : modifié récemment</option>
+          <option value="due">Tri : par échéance</option>
+          <option value="priority">Tri : par priorité</option>
+        </select>
+        <button id="task-clear" class="btn btn-danger">Vider la liste</button>
+      </div>
+
+      <div id="task-list" class="grid"></div>
+      <div id="task-kanban" class="kanban hidden">
+        <div class="col" data-col="À faire">
+          <h4>À faire</h4>
+          <div class="drop" data-status="À faire"></div>
+        </div>
+        <div class="col" data-col="En cours">
+          <h4>En cours</h4>
+          <div class="drop" data-status="En cours"></div>
+        </div>
+        <div class="col" data-col="Terminé">
+          <h4>Terminé</h4>
+          <div class="drop" data-status="Terminé"></div>
+        </div>
       </div>
     </section>
 
-    <section class="container cols" id="objectifs">
-      <div class="card">
-        <h3>OBJECTIFS</h3>
-        <p class="muted">Donner une voix aux oubliés des conflits — populations civiles, minorités, activistes, femmes, réfugiés — pour comprendre comment elles vivent, résistent, reconstruisent.</p>
+    <section id="tab-contacts" class="hidden">
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Contacts</h3>
+          <span class="badge" id="contact-count">0</span>
+        </div>
+        <form id="contact-form">
+          <input type="hidden" id="contact-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom</label>
+              <input id="contact-name" required>
+            </div>
+            <div class="form-group">
+              <label>Type</label>
+              <select id="contact-type">
+                <option>Organisation</option>
+                <option>Personnalité</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Statut</label>
+              <select id="contact-status">
+                <option>En contact</option>
+                <option>À contacter</option>
+                <option>Terminé</option>
+                <option>En attente</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Priorité</label>
+              <select id="contact-priority">
+                <option>Haute</option>
+                <option>Moyenne</option>
+                <option>Basse</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email</label>
+              <input id="contact-email" type="email">
+            </div>
+            <div class="form-group">
+              <label>Réseaux</label>
+              <input id="contact-social">
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <button type="button" id="contact-reset" class="btn">Annuler</button>
+          </div>
+        </form>
       </div>
-      <div class="card">
-        <h3>FOCUS — Goma</h3>
-        <p class="muted">Explorer le quotidien au cœur des zones de conflit : survie, résilience, perte de repères, stratégies et normalité dans la durée.</p>
+      
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Répartition</h3>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="number" id="st-contacted">0</div>
+            <div class="label">En contact</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="st-tocontact">0</div>
+            <div class="label">À contacter</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="st-done">0</div>
+            <div class="label">Terminé</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="st-pending">0</div>
+            <div class="label">En attente</div>
+          </div>
+        </div>
+        <div id="contact-bars" class="grid" style="margin-top: var(--space-md);"></div>
       </div>
+      
+      <div class="search-container">
+        <input id="contact-search" placeholder="🔍 Recherche…">
+        <button id="contact-clear" class="btn btn-danger">Vider la liste</button>
+      </div>
+      <div id="contact-list" class="grid"></div>
     </section>
 
-    <section class="container bento" id="format">
-      <div class="card" style="grid-row:span 2">
-        <h3>FORMAT</h3>
-        <p class="muted">Vidéos reportage ou témoignage filmé, visioconférence ou voix off, portrait croisé, mix reportage / table ronde.</p>
-        <p class="muted">Durée : 4 à 5 minutes.</p>
+    <section id="tab-settings" class="hidden">
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Équipe (assignation par prénoms)</h3>
+          <span class="badge" id="team-count">0</span>
+        </div>
+        <div class="actions" style="margin-bottom: var(--space-md);">
+          <input id="team-input" placeholder="Ajouter un prénom (ex: Alex)" style="max-width:300px; margin-right: auto;">
+          <button id="team-add-main" class="btn btn-primary" type="button">Ajouter</button>
+        </div>
+        <div id="team-list" class="actions"></div>
       </div>
-      <div class="card">
-        <h3>PROFILS</h3>
-        <p class="muted">Artistes engagés, journalistes, ONG locales, réfugiés, humanitaires, chercheurs. Jeunes, psychologues communautaires, militantes féministes, victimes, sociologues.</p>
+      
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Export PDF</h3>
+          <span class="badge success">Rapport</span>
+        </div>
+        <p class="muted">Logo, stats, échéances, récapitulatif des tâches terminées avec design professionnel.</p>
+        <button id="btn-pdf" class="btn btn-primary">📄 Exporter le rapport PDF</button>
       </div>
-      <div class="card">
-        <h3>Bonus</h3>
-        <p class="muted">Extraits d’un documentaire d’une ONG internationale oeuvrant pour la paix (HWPL).</p>
-      </div>
-    </section>
-
-    <section class="container cols" id="app">
-      <div class="card">
-        <h3>L’app qui vous accompagne</h3>
-        <p class="muted">Tâches (assignées à <b>Jude</b>, <b>Grace</b> + autres), échéances, notes, vue Kanban & statistiques, thème du mois. Export PDF avec récapitulatif écrit.</p>
-        <a class="cta" href="app.html" style="margin-top:12px;display:inline-block">Ouvrir l’app</a>
-      </div>
-      <div class="card">
-        <h3>Déploiement simple</h3>
-        <p class="muted">PWA hors‑ligne, service worker, manifest. Hébergement facile via GitHub Pages — aucun serveur requis.</p>
+      
+      <div class="card slide-in">
+        <div class="card-header">
+          <h3>Maintenance</h3>
+          <span class="badge warning">Admin</span>
+        </div>
+        <div class="actions">
+          <button id="btn-demo" class="btn">🎬 Recréer données démo</button>
+          <button id="btn-reset" class="btn btn-danger">🗑️ Réinitialiser tout</button>
+        </div>
       </div>
     </section>
   </main>
 
+  <button id="btn-install" class="btn btn-primary">📱 Installer l'app</button>
+  <div id="toast" role="status" aria-live="polite"></div>
+  
   <footer class="container">
-    <small>© <span id="year"></span> Regards Croisés — Série & média</small>
+    <small>© <span id="year"></span> Regards Croisés — Application de gestion</small>
   </footer>
 
   <script>
-    document.querySelector('#year').textContent = new Date().getFullYear();
+    const KEY = 'rc-data-modern-v1';
+    const THEME_KEY = 'rc-theme';
+    const $ = s => document.querySelector(s);
+    
+    const State = {
+      data: {
+        articles: [],
+        episodes: [],
+        tasks: [],
+        contacts: [],
+        theme: { title: '', desc: '' },
+        team: []
+      },
+      save() {
+        localStorage.setItem(KEY, JSON.stringify(this.data));
+      },
+      load() {
+        const saved = localStorage.getItem(KEY);
+        this.data = saved ? JSON.parse(saved) : {
+          articles: [],
+          episodes: [],
+          tasks: [],
+          contacts: [],
+          theme: { title: '', desc: '' },
+          team: ['Jude', 'Grace']
+        };
+      }
+    };
+
+    // Theme management
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const btn = $('#btn-theme');
+      btn.textContent = theme === 'dark' ? '☀️ Clair' : '🌙 Sombre';
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    }
+
+    // Utility functions
+    function toast(msg) {
+      const t = $('#toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    function uid() {
+      return Math.random().toString(36).slice(2, 9);
+    }
+
+    function stringifyTags(v) {
+      return (v || '').split(',').map(t => t.trim()).filter(Boolean);
+    }
+
+    function matches(q, ...fields) {
+      q = q.toLowerCase();
+      return fields.some(x => (x || '').toLowerCase().includes(q));
+    }
+
+    function selectTab(name) {
+      document.querySelectorAll('.seg').forEach(b => 
+        b.setAttribute('aria-selected', String(b.dataset.tab === name))
+      );
+      document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
+      const target = $('#tab-' + name);
+      if (target) {
+        target.classList.remove('hidden');
+        // Add slide-in animation to cards
+        target.querySelectorAll('.card').forEach((card, i) => {
+          card.style.animationDelay = `${i * 0.1}s`;
+          card.classList.add('slide-in');
+        });
+      }
+    }
+
+    function updateCounts() {
+      $('#article-count').textContent = State.data.articles.length;
+      $('#episode-count').textContent = State.data.episodes.length;
+      $('#task-count').textContent = State.data.tasks.length;
+      $('#contact-count').textContent = State.data.contacts.length;
+      $('#team-count').textContent = State.data.team.length;
+    }
+
+    function refreshAssigneeOptions() {
+      const sel = $('#task-assignees');
+      if (!sel) return;
+      const selected = Array.from(sel.selectedOptions).map(o => o.value);
+      sel.innerHTML = (State.data.team || []).map(n => 
+        `<option value="${n}">${n}</option>`
+      ).join('');
+      selected.forEach(v => {
+        const option = [...sel.options].find(x => x.value === v);
+        if (option) option.selected = true;
+      });
+    }
+
+    // Articles functions
+    function renderArticles(list = State.data.articles) {
+      const q = $('#article-search')?.value?.trim().toLowerCase() || '';
+      const filtered = q ? list.filter(a => 
+        matches(q, a.title, a.summary, (a.tags || []).join(','))
+      ) : list;
+      
+      const wrap = $('#article-list');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      
+      if (!filtered.length) {
+        wrap.innerHTML = '<div class="card muted">Aucun article trouvé.</div>';
+        return;
+      }
+      
+      filtered.forEach(a => {
+        const el = document.createElement('div');
+        el.className = 'card slide-in';
+        el.innerHTML = `
+          <h3>${a.title}</h3>
+          <p class="muted">${a.summary || 'Aucun résumé'}</p>
+          <div class="actions" style="margin: var(--space-sm) 0;">
+            ${(a.tags || []).map(t => `<span class="pill">#${t}</span>`).join('')}
+          </div>
+          <div class="actions">
+            <button class="btn" data-edit="${a.id}">✏️ Éditer</button>
+            <button class="btn btn-danger" data-del="${a.id}">🗑️ Supprimer</button>
+          </div>
+        `;
+        wrap.appendChild(el);
+      });
+      
+      wrap.querySelectorAll('[data-edit]').forEach(b => 
+        b.onclick = () => editArticle(b.dataset.edit)
+      );
+      wrap.querySelectorAll('[data-del]').forEach(b => 
+        b.onclick = () => delArticle(b.dataset.del)
+      );
+    }
+
+    function editArticle(id) {
+      const a = State.data.articles.find(x => x.id === id);
+      if (!a) return;
+      $('#article-id').value = a.id;
+      $('#article-title').value = a.title;
+      $('#article-tags').value = (a.tags || []).join(', ');
+      $('#article-summary').value = a.summary || '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      selectTab('articles');
+    }
+
+    function delArticle(id) {
+      if (!confirm('Supprimer cet article ?')) return;
+      State.data.articles = State.data.articles.filter(x => x.id !== id);
+      State.save();
+      renderArticles();
+      updateCounts();
+      toast('Article supprimé');
+    }
+
+    // Episodes functions
+    function renderEpisodes(list = State.data.episodes) {
+      const q = $('#ep-search')?.value?.trim().toLowerCase() || '';
+      const filtered = q ? list.filter(e => 
+        matches(q, e.title, e.guests, e.theme, e.status, e.date)
+      ) : list;
+      
+      const wrap = $('#ep-list');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      
+      if (!filtered.length) {
+        wrap.innerHTML = '<div class="card muted">Aucun épisode trouvé.</div>';
+        return;
+      }
+      
+      filtered.forEach(e => {
+        const el = document.createElement('div');
+        el.className = 'card slide-in';
+        const img = e.image ? 
+          `<img src="${e.image}" alt="visuel" style="width:100%;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:var(--space-md)">` : '';
+        const audio = e.audio ? 
+          `<audio controls style="width:100%;margin-top:var(--space-sm)"><source src="${e.audio}"></audio>` : '';
+        
+        el.innerHTML = `
+          ${img}
+          <h3>${e.title}</h3>
+          <div class="actions" style="margin: var(--space-sm) 0;">
+            <span class="status ${e.status === 'Publié' ? 'success' : ''}">${e.status || 'Brouillon'}</span>
+            ${e.date ? `<span class="pill">📅 ${e.date}</span>` : ''}
+          </div>
+          <p class="muted">
+            <strong>Invité(s):</strong> ${e.guests || '—'}<br>
+            <strong>Thème:</strong> ${e.theme || '—'}
+          </p>
+          ${audio}
+          <div class="actions" style="margin-top: var(--space-md);">
+            ${e.link ? `<a class="btn" href="${e.link}" target="_blank" rel="noopener">🎧 Écouter</a>` : ''}
+            <button class="btn" data-ep-edit="${e.id}">✏️ Éditer</button>
+            <button class="btn btn-danger" data-ep-del="${e.id}">🗑️ Supprimer</button>
+          </div>
+        `;
+        wrap.appendChild(el);
+      });
+      
+      wrap.querySelectorAll('[data-ep-edit]').forEach(b => 
+        b.onclick = () => editEpisode(b.dataset.epEdit)
+      );
+      wrap.querySelectorAll('[data-ep-del]').forEach(b => 
+        b.onclick = () => delEpisode(b.dataset.epDel)
+      );
+    }
+
+    function editEpisode(id) {
+      const e = State.data.episodes.find(x => x.id === id);
+      if (!e) return;
+      $('#ep-id').value = e.id;
+      $('#ep-title').value = e.title;
+      $('#ep-guests').value = e.guests || '';
+      $('#ep-theme').value = e.theme || '';
+      $('#ep-link').value = e.link || '';
+      $('#ep-image').value = e.image || '';
+      $('#ep-audio').value = e.audio || '';
+      $('#ep-status').value = e.status || 'Brouillon';
+      $('#ep-date').value = e.date || '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      selectTab('episodes');
+    }
+
+    function delEpisode(id) {
+      if (!confirm('Supprimer cet épisode ?')) return;
+      State.data.episodes = State.data.episodes.filter(x => x.id !== id);
+      State.save();
+      renderEpisodes();
+      updateCounts();
+      toast('Épisode supprimé');
+    }
+
+    // Tasks functions
+    function computeTaskStats() {
+      const t = State.data.tasks;
+      const total = t.length;
+      const done = t.filter(x => x.status === 'Terminé').length;
+      const high = t.filter(x => x.priority === 'Haute').length;
+      const now = new Date();
+      const weekAhead = new Date();
+      weekAhead.setDate(now.getDate() + 7);
+      const late = t.filter(x => x.status !== 'Terminé' && x.due && new Date(x.due) < now).length;
+      const week = t.filter(x => x.status !== 'Terminé' && x.due && 
+        new Date(x.due) <= weekAhead && new Date(x.due) >= now).length;
+      
+      $('#stat-task-total').textContent = total;
+      $('#stat-task-done').textContent = done;
+      $('#stat-task-high').textContent = high;
+      $('#stat-task-late').textContent = late;
+      $('#stat-task-week').textContent = week;
+      
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      $('#task-progress').style.width = pct + '%';
+      $('#task-progress').title = pct + '%';
+    }
+
+    function sortTasks(list) {
+      const mode = $('#task-sort').value;
+      const priRank = { Haute: 0, Moyenne: 1, Basse: 2 };
+      
+      if (mode === 'due') {
+        return list.slice().sort((a, b) => (a.due || '').localeCompare(b.due || ''));
+      }
+      if (mode === 'priority') {
+        return list.slice().sort((a, b) => 
+          (priRank[a.priority] ?? 9) - (priRank[b.priority] ?? 9)
+        );
+      }
+      return list.slice();
+    }
+
+    function renderTasks(list = State.data.tasks) {
+      computeTaskStats();
+      const q = $('#task-search')?.value?.trim().toLowerCase() || '';
+      const filtered = q ? list.filter(t => 
+        matches(q, t.title, t.notes, (t.assignees || []).join(','))
+      ) : list;
+      const sorted = sortTasks(filtered);
+      
+      const wrap = $('#task-list');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      
+      if (!sorted.length) {
+        wrap.innerHTML = '<div class="card muted">Aucune tâche trouvée.</div>';
+        return;
+      }
+      
+      sorted.forEach(t => {
+        const el = document.createElement('div');
+        el.className = 'card slide-in';
+        el.draggable = true;
+        el.dataset.id = t.id;
+        
+        const who = t.assignees || [];
+        const due = t.due ? ` 📅 ${t.due}` : '';
+        const overdue = t.status !== 'Terminé' && t.due && (new Date(t.due) < new Date());
+        
+        el.innerHTML = `
+          <h3>${t.title}</h3>
+          <div class="actions" style="margin: var(--space-sm) 0;">
+            <span class="status ${t.status === 'Terminé' ? 'success' : t.status === 'En cours' ? 'warning' : ''}">${t.status}</span>
+            <span class="status ${t.priority === 'Haute' ? 'danger' : t.priority === 'Moyenne' ? 'warning' : ''}">${t.priority}</span>
+            ${who.length ? who.map(n => `<span class="pill">👤 ${n}</span>`).join('') : '<span class="pill">—</span>'}
+          </div>
+          <p class="muted">${t.notes || 'Aucune note'}${due}</p>
+          <div class="actions">
+            <button class="btn" data-task-edit="${t.id}">✏️ Éditer</button>
+            <button class="btn btn-danger" data-task-del="${t.id}">🗑️ Supprimer</button>
+          </div>
+        `;
+        
+        if (overdue) {
+          el.style.border = '2px solid var(--danger)';
+          el.style.background = 'rgba(255, 59, 48, 0.05)';
+        }
+        
+        wrap.appendChild(el);
+      });
+      
+      wrap.querySelectorAll('[data-task-edit]').forEach(b => 
+        b.onclick = () => editTask(b.dataset.taskEdit)
+      );
+      wrap.querySelectorAll('[data-task-del]').forEach(b => 
+        b.onclick = () => delTask(b.dataset.taskDel)
+      );
+      
+      // Drag and drop setup
+      wrap.querySelectorAll('.card').forEach(c => {
+        c.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', c.dataset.id);
+        });
+      });
+    }
+
+    function buildKanban() {
+      const areas = document.querySelectorAll('#task-kanban .drop');
+      areas.forEach(a => {
+        a.innerHTML = '';
+        const status = a.dataset.status;
+        const items = State.data.tasks.filter(t => t.status === status);
+        
+        items.forEach(t => {
+          const k = document.createElement('div');
+          k.className = 'kan-card';
+          k.draggable = true;
+          k.dataset.id = t.id;
+          
+          const who = t.assignees || [];
+          k.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-xs);">
+              <strong>${t.title}</strong>
+              <span class="status ${t.priority === 'Haute' ? 'danger' : t.priority === 'Moyenne' ? 'warning' : ''}">${t.priority}</span>
+            </div>
+            <div class="muted" style="font-size: 12px;">
+              👤 ${who.join(', ') || '—'} ${t.due ? ('📅 ' + t.due) : ''}
+            </div>
+          `;
+          
+          k.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text/plain', t.id);
+          });
+          
+          a.appendChild(k);
+        });
+        
+        a.addEventListener('dragover', e => e.preventDefault());
+        a.addEventListener('drop', e => {
+          e.preventDefault();
+          const id = e.dataTransfer.getData('text/plain');
+          const idx = State.data.tasks.findIndex(x => x.id === id);
+          if (idx < 0) return;
+          
+          const prev = State.data.tasks[idx];
+          State.data.tasks[idx] = {
+            ...prev,
+            status: status,
+            completedAt: status === 'Terminé' ? (prev.completedAt || new Date().toISOString()) : prev.completedAt
+          };
+          
+          State.save();
+          renderTasks();
+          buildKanban();
+          toast('Statut mis à jour');
+        });
+      });
+    }
+
+    function editTask(id) {
+      const t = State.data.tasks.find(x => x.id === id);
+      if (!t) return;
+      $('#task-id').value = t.id;
+      $('#task-title').value = t.title;
+      $('#task-status').value = t.status;
+      $('#task-priority').value = t.priority;
+      $('#task-notes').value = t.notes || '';
+      $('#task-due').value = t.due || '';
+      
+      refreshAssigneeOptions();
+      const sel = $('#task-assignees');
+      [...sel.options].forEach(o => 
+        o.selected = (t.assignees || []).includes(o.value)
+      );
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      selectTab('tasks');
+    }
+
+    function delTask(id) {
+      if (!confirm('Supprimer cette tâche ?')) return;
+      State.data.tasks = State.data.tasks.filter(x => x.id !== id);
+      State.save();
+      renderTasks();
+      buildKanban();
+      updateCounts();
+      toast('Tâche supprimée');
+    }
+
+    // Contacts functions
+    function computeContactStats() {
+      const c = State.data.contacts;
+      const by = s => c.filter(x => x.status === s).length;
+      
+      $('#st-contacted').textContent = by('En contact');
+      $('#st-tocontact').textContent = by('À contacter');
+      $('#st-done').textContent = by('Terminé');
+      $('#st-pending').textContent = by('En attente');
+    }
+
+    function renderContacts(list = State.data.contacts) {
+      computeContactStats();
+      const q = $('#contact-search')?.value?.trim().toLowerCase() || '';
+      const filtered = q ? list.filter(c => 
+        matches(q, c.name, c.email, c.social)
+      ) : list;
+      
+      const wrap = $('#contact-list');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      
+      if (!filtered.length) {
+        wrap.innerHTML = '<div class="card muted">Aucun contact trouvé.</div>';
+        return;
+      }
+      
+      filtered.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'card slide-in';
+        
+        el.innerHTML = `
+          <h3>${c.name}</h3>
+          <div class="actions" style="margin: var(--space-sm) 0;">
+            <span class="status ${c.status === 'En contact' ? 'success' : c.status === 'À contacter' ? 'warning' : ''}">${c.status}</span>
+            <span class="status">${c.type}</span>
+            <span class="status ${c.priority === 'Haute' ? 'danger' : c.priority === 'Moyenne' ? 'warning' : ''}">${c.priority}</span>
+          </div>
+          <p class="muted">
+            ${c.email ? '📧 ' + c.email : ''}
+            ${c.social ? ' 🌐 ' + c.social : ''}
+          </p>
+          <div class="actions">
+            <button class="btn" data-contact-edit="${c.id}">✏️ Éditer</button>
+            <button class="btn btn-danger" data-contact-del="${c.id}">🗑️ Supprimer</button>
+          </div>
+        `;
+        wrap.appendChild(el);
+      });
+      
+      wrap.querySelectorAll('[data-contact-edit]').forEach(b => 
+        b.onclick = () => editContact(b.dataset.contactEdit)
+      );
+      wrap.querySelectorAll('[data-contact-del]').forEach(b => 
+        b.onclick = () => delContact(b.dataset.contactDel)
+      );
+    }
+
+    function editContact(id) {
+      const c = State.data.contacts.find(x => x.id === id);
+      if (!c) return;
+      $('#contact-id').value = c.id;
+      $('#contact-name').value = c.name;
+      $('#contact-type').value = c.type;
+      $('#contact-status').value = c.status;
+      $('#contact-priority').value = c.priority;
+      $('#contact-email').value = c.email || '';
+      $('#contact-social').value = c.social || '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      selectTab('contacts');
+    }
+
+    function delContact(id) {
+      if (!confirm('Supprimer ce contact ?')) return;
+      State.data.contacts = State.data.contacts.filter(x => x.id !== id);
+      State.save();
+      renderContacts();
+      updateCounts();
+      toast('Contact supprimé');
+    }
+
+    // Theme functions
+    function updateThemePreview() {
+      const t = State.data.theme || { title: '', desc: '' };
+      $('#theme-title').value = t.title || '';
+      $('#theme-desc').value = t.desc || '';
+      $('#theme-preview').textContent = t.title ? 
+        (t.title + ' — ' + (t.desc || '')) : 'Aucun thème défini.';
+    }
+
+    // Team functions
+    function renderTeam() {
+      const wrap = $('#team-list');
+      wrap.innerHTML = '';
+      
+      if (!State.data.team.length) {
+        wrap.innerHTML = '<span class="muted">Aucun membre pour le moment.</span>';
+        return;
+      }
+      
+      State.data.team.forEach(name => {
+        const btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.textContent = `👤 ${name}`;
+        btn.title = 'Supprimer';
+        btn.onclick = () => {
+          if (!confirm('Retirer ' + name + ' ?')) return;
+          State.data.team = State.data.team.filter(n => n !== name);
+          State.data.tasks = State.data.tasks.map(t => ({
+            ...t,
+            assignees: (t.assignees || []).filter(a => a !== name)
+          }));
+          State.save();
+          renderTeam();
+          refreshAssigneeOptions();
+          renderTasks();
+          buildKanban();
+          updateCounts();
+          toast(`${name} retiré de l'équipe`);
+        };
+        wrap.appendChild(btn);
+      });
+    }
+
+    // PDF Export (simplified version)
+    async function exportPDF() {
+      try {
+        if (!window.jspdf) {
+          await new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        }
+        
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Add content
+        doc.setFontSize(20);
+        doc.text('Regards Croisés - Rapport', 20, 30);
+        
+        doc.setFontSize(12);
+        doc.text(new Date().toLocaleDateString(), 20, 50);
+        
+        const theme = State.data.theme || {};
+        doc.text(`Thème: ${theme.title || 'Non défini'}`, 20, 70);
+        
+        const stats = [
+          `Articles: ${State.data.articles.length}`,
+          `Épisodes: ${State.data.episodes.length}`,
+          `Tâches: ${State.data.tasks.length}`,
+          `Contacts: ${State.data.contacts.length}`
+        ];
+        
+        stats.forEach((stat, i) => {
+          doc.text(stat, 20, 90 + (i * 10));
+        });
+        
+        doc.save(`RC-Rapport-${Date.now()}.pdf`);
+        toast('PDF exporté avec succès');
+      } catch (error) {
+        console.error('Erreur PDF:', error);
+        toast('Erreur lors de l\'export PDF');
+      }
+    }
+
+    // Demo data
+    function seedDemo() {
+      State.data = {
+        theme: {
+          title: 'Résilience — Des voix qui s\'élèvent',
+          desc: 'Ce mois‑ci, résilience des civils face aux conflits.'
+        },
+        team: ['Jude', 'Grace', 'Alex'],
+        articles: [{
+          id: uid(),
+          title: 'Pourquoi « Regards croisés » ?',
+          tags: ['éditorial', 'apolitique'],
+          summary: 'Témoignages authentiques, nuance, contre‑récit.'
+        }],
+        episodes: [{
+          id: uid(),
+          title: 'Épisode 1 — Vivre sous le conflit',
+          guests: 'journaliste local·e',
+          theme: 'Goma (RDC)',
+          status: 'Publié',
+          date: new Date().toISOString().slice(0, 10),
+          image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop',
+          audio: '',
+          link: ''
+        }],
+        tasks: [
+          {
+            id: uid(),
+            title: 'Contacter journaliste local',
+            status: 'En cours',
+            priority: 'Haute',
+            notes: 'Pitch + créneau',
+            assignees: ['Grace'],
+            due: new Date(Date.now() + 3 * 86400000).toISOString().slice(0, 10)
+          },
+          {
+            id: uid(),
+            title: 'Rédiger article éditorial',
+            status: 'À faire',
+            priority: 'Moyenne',
+            notes: '',
+            assignees: ['Jude'],
+            due: new Date(Date.now() + 9 * 86400000).toISOString().slice(0, 10)
+          },
+          {
+            id: uid(),
+            title: 'Monter épisode 1',
+            status: 'Terminé',
+            priority: 'Haute',
+            notes: 'Valider compression',
+            assignees: ['Grace', 'Alex'],
+            completedAt: new Date().toISOString(),
+            due: new Date().toISOString().slice(0, 10)
+          }
+        ],
+        contacts: [
+          {
+            id: uid(),
+            name: 'Médecins du Monde',
+            type: 'Organisation',
+            status: 'En contact',
+            priority: 'Moyenne',
+            email: 'contact@medecinsdumonde.org',
+            social: '@MDM'
+          },
+          {
+            id: uid(),
+            name: 'J. Dupont (Journaliste)',
+            type: 'Personnalité',
+            status: 'À contacter',
+            priority: 'Haute',
+            email: 'j.dupont@example.com',
+            social: '@jdupont'
+          }
+        ]
+      };
+      State.save();
+      renderAll();
+      toast('Données de démonstration créées');
+    }
+
+    // Main render function
+    function renderAll() {
+      renderArticles();
+      renderEpisodes();
+      renderTasks();
+      renderContacts();
+      updateThemePreview();
+      refreshAssigneeOptions();
+      buildKanban();
+      renderTeam();
+      updateCounts();
+      $('#year').textContent = new Date().getFullYear();
+    }
+
+    // Initialization
+    function init() {
+      // Apply saved theme
+      applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+      $('#btn-theme').onclick = toggleTheme;
+
+      // Load data
+      State.load();
+      if (!State.data.team || !State.data.team.length) {
+        State.data.team = ['Jude', 'Grace'];
+      }
+      
+      // Create demo data if empty
+      if (!State.data.articles.length && !State.data.episodes.length && 
+          !State.data.tasks.length && !State.data.contacts.length) {
+        seedDemo();
+      } else {
+        renderAll();
+      }
+
+      // Tab navigation
+      document.querySelectorAll('.seg').forEach(btn => 
+        btn.onclick = () => selectTab(btn.dataset.tab)
+      );
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/') {
+          e.preventDefault();
+          const tab = document.querySelector('.seg[aria-selected="true"]').dataset.tab;
+          const field = document.querySelector(`#tab-${tab} input[placeholder*="Recherche"]`);
+          if (field) field.focus();
+        }
+        if (e.key.toLowerCase() === 't') {
+          selectTab('tasks');
+          $('#task-title').focus();
+        }
+      });
+
+      // Team management
+      const addTeam = (selector) => {
+        const input = document.querySelector(selector);
+        const name = input.value.trim();
+        if (!name) return;
+        if (State.data.team.includes(name)) {
+          toast('Ce membre existe déjà');
+          return;
+        }
+        State.data.team.push(name);
+        State.save();
+        input.value = '';
+        renderTeam();
+        refreshAssigneeOptions();
+        updateCounts();
+        toast(`${name} ajouté à l'équipe`);
+      };
+
+      $('#team-add-main').onclick = () => addTeam('#team-input');
+      $('#team-add').onclick = () => addTeam('#team-new');
+
+      // Form submissions
+      $('#article-form')?.addEventListener('submit', e => {
+        e.preventDefault();
+        const id = $('#article-id').value || uid();
+        const entry = {
+          id,
+          title: $('#article-title').value.trim(),
+          tags: stringifyTags($('#article-tags').value),
+          summary: $('#article-summary').value.trim()
+        };
+        
+        if (!entry.title) {
+          toast('Titre requis');
+          return;
+        }
+        
+        const idx = State.data.articles.findIndex(a => a.id === id);
+        if (idx > -1) {
+          State.data.articles[idx] = entry;
+        } else {
+          State.data.articles.unshift(entry);
+        }
+        
+        State.save();
+        e.target.reset();
+        $('#article-id').value = '';
+        renderArticles();
+        updateCounts();
+        toast('Article enregistré');
+      });
+
+      $('#ep-form')?.addEventListener('submit', e => {
+        e.preventDefault();
+        const id = $('#ep-id').value || uid();
+        const entry = {
+          id,
+          title: $('#ep-title').value.trim(),
+          guests: $('#ep-guests').value.trim(),
+          theme: $('#ep-theme').value.trim(),
+          image: $('#ep-image').value.trim(),
+          audio: $('#ep-audio').value.trim(),
+          link: $('#ep-link').value.trim(),
+          status: $('#ep-status').value,
+          date: $('#ep-date').value
+        };
+        
+        if (!entry.title) {
+          toast('Titre requis');
+          return;
+        }
+        
+        const idx = State.data.episodes.findIndex(a => a.id === id);
+        if (idx > -1) {
+          State.data.episodes[idx] = entry;
+        } else {
+          State.data.episodes.unshift(entry);
+        }
+        
+        State.save();
+        e.target.reset();
+        $('#ep-id').value = '';
+        renderEpisodes();
+        updateCounts();
+        toast('Épisode enregistré');
+      });
+
+      $('#task-form')?.addEventListener('submit', e => {
+        e.preventDefault();
+        const id = $('#task-id').value || uid();
+        const assignees = Array.from($('#task-assignees').selectedOptions).map(o => o.value);
+        const entry = {
+          id,
+          title: $('#task-title').value.trim(),
+          status: $('#task-status').value,
+          priority: $('#task-priority').value,
+          notes: $('#task-notes').value.trim(),
+          assignees,
+          due: $('#task-due').value
+        };
+        
+        if (!entry.title) {
+          toast('Titre requis');
+          return;
+        }
+        
+        const idx = State.data.tasks.findIndex(a => a.id === id);
+        if (idx > -1) {
+          const prev = State.data.tasks[idx];
+          if (entry.status === 'Terminé' && prev.status !== 'Terminé' && !prev.completedAt) {
+            entry.completedAt = new Date().toISOString();
+          }
+          if (prev.completedAt && entry.status === 'Terminé') {
+            entry.completedAt = prev.completedAt;
+          }
+          State.data.tasks[idx] = entry;
+        } else {
+          if (entry.status === 'Terminé') {
+            entry.completedAt = new Date().toISOString();
+          }
+          State.data.tasks.unshift(entry);
+        }
+        
+        State.save();
+        e.target.reset();
+        $('#task-id').value = '';
+        renderTasks();
+        buildKanban();
+        updateCounts();
+        toast('Tâche enregistrée');
+      });
+
+      $('#contact-form')?.addEventListener('submit', e => {
+        e.preventDefault();
+        const id = $('#contact-id').value || uid();
+        const entry = {
+          id,
+          name: $('#contact-name').value.trim(),
+          type: $('#contact-type').value,
+          status: $('#contact-status').value,
+          priority: $('#contact-priority').value,
+          email: $('#contact-email').value.trim(),
+          social: $('#contact-social').value.trim()
+        };
+        
+        if (!entry.name) {
+          toast('Nom requis');
+          return;
+        }
+        
+        const idx = State.data.contacts.findIndex(a => a.id === id);
+        if (idx > -1) {
+          State.data.contacts[idx] = entry;
+        } else {
+          State.data.contacts.unshift(entry);
+        }
+        
+        State.save();
+        e.target.reset();
+        $('#contact-id').value = '';
+        renderContacts();
+        updateCounts();
+        toast('Contact enregistré');
+      });
+
+      $('#theme-form').addEventListener('submit', e => {
+        e.preventDefault();
+        State.data.theme = {
+          title: $('#theme-title').value.trim(),
+          desc: $('#theme-desc').value.trim()
+        };
+        State.save();
+        updateThemePreview();
+        toast('Thème mis à jour');
+      });
+
+      // Reset buttons
+      $('#article-reset').onclick = () => {
+        $('#article-form').reset();
+        $('#article-id').value = '';
+      };
+      $('#ep-reset').onclick = () => {
+        $('#ep-form').reset();
+        $('#ep-id').value = '';
+      };
+      $('#task-reset').onclick = () => {
+        $('#task-form').reset();
+        $('#task-id').value = '';
+      };
+      $('#contact-reset').onclick = () => {
+        $('#contact-form').reset();
+        $('#contact-id').value = '';
+      };
+
+      // Search handlers
+      $('#article-search').oninput = () => renderArticles();
+      $('#ep-search').oninput = () => renderEpisodes();
+      $('#task-search').oninput = () => renderTasks();
+      $('#contact-search').oninput = () => renderContacts();
+      $('#task-sort').onchange = () => renderTasks();
+
+      // Clear buttons
+      $('#article-clear').onclick = () => {
+        if (confirm('Supprimer tous les articles ?')) {
+          State.data.articles = [];
+          State.save();
+          renderArticles();
+          updateCounts();
+          toast('Articles supprimés');
+        }
+      };
+      $('#ep-clear').onclick = () => {
+        if (confirm('Supprimer tous les épisodes ?')) {
+          State.data.episodes = [];
+          State.save();
+          renderEpisodes();
+          updateCounts();
+          toast('Épisodes supprimés');
+        }
+      };
+      $('#task-clear').onclick = () => {
+        if (confirm('Supprimer toutes les tâches ?')) {
+          State.data.tasks = [];
+          State.save();
+          renderTasks();
+          buildKanban();
+          updateCounts();
+          toast('Tâches supprimées');
+        }
+      };
+      $('#contact-clear').onclick = () => {
+        if (confirm('Supprimer tous les contacts ?')) {
+          State.data.contacts = [];
+          State.save();
+          renderContacts();
+          updateCounts();
+          toast('Contacts supprimés');
+        }
+      };
+
+      // View toggle buttons
+      $('#view-list').onclick = () => {
+        $('#task-list').classList.remove('hidden');
+        $('#task-kanban').classList.add('hidden');
+        $('#view-list').style.background = 'var(--accent)';
+        $('#view-list').style.color = 'white';
+        $('#view-kanban').style.background = '';
+        $('#view-kanban').style.color = '';
+      };
+      $('#view-kanban').onclick = () => {
+        $('#task-kanban').classList.remove('hidden');
+        $('#task-list').classList.add('hidden');
+        $('#view-kanban').style.background = 'var(--accent)';
+        $('#view-kanban').style.color = 'white';
+        $('#view-list').style.background = '';
+        $('#view-list').style.color = '';
+        buildKanban();
+      };
+
+      // Admin functions
+      $('#btn-pdf').onclick = exportPDF;
+      $('#btn-reset').onclick = () => {
+        if (confirm('Tout réinitialiser ? Cette action est irréversible.')) {
+          localStorage.removeItem(KEY);
+          State.load();
+          renderAll();
+          toast('Application réinitialisée');
+        }
+      };
+      $('#btn-demo').onclick = () => {
+        if (confirm('Écraser les données actuelles par une démo ?')) {
+          seedDemo();
+        }
+      };
+    }
+
+    // PWA Installation
+    let deferredPrompt;
+    const installBtn = $('#btn-install');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn?.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
+
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => {
+          console.log('SW registration failed');
+        });
+      });
+    }
+
+    // Start the app
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
