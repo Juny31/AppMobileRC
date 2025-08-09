@@ -1,140 +1,1109 @@
-
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="cupertino">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Regards Croisés — Série & média</title>
+  <title>Regards Croisés — App</title>
   <meta name="theme-color" content="#f5f5f7"/>
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <style>
     :root{
-      --bg:#f5f5f7; --card:#ffffff; --text:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --accent:#0071e3;
-      --space-xs:8px; --space-sm:12px; --space-md:20px; --space-lg:32px; --space-xl:48px; --space-2xl:72px; --space-3xl:108px;
-      --radius:24px;
+      --bg: #f5f5f7;
+      --card: rgba(255, 255, 255, 0.8);
+      --card-hover: rgba(255, 255, 255, 0.95);
+      --glass: rgba(255, 255, 255, 0.25);
+      --text: #1d1d1f;
+      --text-secondary: #86868b;
+      --muted: #6e6e73;
+      --line: rgba(0, 0, 0, 0.08);
+      --accent: #007aff;
+      --accent-light: rgba(0, 122, 255, 0.1);
+      --success: #34c759;
+      --warning: #ff9500;
+      --danger: #ff3b30;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+      --radius-lg: 24px;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.54}
-    a{color:var(--accent);text-decoration:none}
-    header{position:sticky;top:0;z-index:10;backdrop-filter:saturate(180%) blur(16px);background:color-mix(in srgb, var(--bg) 70%, transparent);border-bottom:1px solid var(--line)}
-    .container{max-width:1200px;margin:auto;padding:0 var(--space-lg)}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:var(--space-md) 0}
-    .left{display:flex;align-items:center;gap:var(--space-sm)}
-    .logo{width:40px;height:40px;border-radius:12px}
-    .links a{margin:0 var(--space-sm);color:var(--text)}
-    .cta{border:1px solid var(--line);padding:12px 18px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700}
-    section{padding: var(--space-2xl) 0}
-    .hero{display:grid;gap:var(--space-xl);grid-template-columns:1fr;align-items:center}
-    @media(min-width:980px){.hero{grid-template-columns: 1.2fr .8fr}}
-    .h-kicker{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);margin-bottom:var(--space-sm)}
-    .h-title{font-size: clamp(40px, 5.5vw, 68px); line-height:1.08; letter-spacing:-.02em; margin:0 0 var(--space-md)}
-    .h-sub{font-size: clamp(18px, 2.2vw, 22px); color:var(--muted); margin: 0 0 var(--space-lg)}
-    .hero img{width:100%;height:auto;border:1px solid var(--line);border-radius:28px;box-shadow:0 10px 44px rgba(0,0,0,.08)}
-    .bento{display:grid;gap:var(--space-lg);grid-template-columns:1fr}
-    @media(min-width:1020px){.bento{grid-template-columns: 2fr 1fr 1fr}}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-lg);box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.08)}
-    .card h3{margin:.2rem 0 .6rem;font-size: clamp(20px, 2.2vw, 24px)}
-    .muted{color:var(--muted)}
-    .pill{border:1px solid var(--line);padding:8px 12px;border-radius:999px}
-    .cols{display:grid;gap:var(--space-lg);grid-template-columns:1fr}
-    @media(min-width:980px){.cols{grid-template-columns:1fr 1fr}}
-    footer{padding: var(--space-xl) 0; border-top:1px solid var(--line); color:var(--muted); margin-top:var(--space-xl)}
+
+    [data-theme="cupertino-dark"] {
+      --bg: #000000;
+      --card: rgba(28, 28, 30, 0.8);
+      --card-hover: rgba(28, 28, 30, 0.95);
+      --glass: rgba(28, 28, 30, 0.7);
+      --text: #f2f2f7;
+      --text-secondary: #8e8e93;
+      --muted: #98989d;
+      --line: rgba(255, 255, 255, 0.1);
+      --accent: #0a84ff;
+      --accent-light: rgba(10, 132, 255, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 95%, var(--accent)) 100%);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Header with enhanced glassmorphism */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(20px);
+      background: var(--glass);
+      border-bottom: 1px solid var(--line);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 var(--space-lg);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md) 0;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .bar {
+      display: flex;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0 var(--space-lg);
+      border-top: 1px solid var(--line);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .seg {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .seg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .seg:hover::before {
+      left: 100%;
+    }
+
+    .seg:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+      background: var(--card-hover);
+    }
+
+    .seg[aria-selected="true"] {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      box-shadow: 0 4px 16px var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    main {
+      padding: var(--space-2xl) 0;
+      min-height: calc(100vh - 200px);
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: 1fr;
+    }
+
+    @media(min-width: 980px) {
+      .grid {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    /* Enhanced cards with glassmorphism */
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      background: var(--card-hover);
+    }
+
+    .card h3 {
+      margin: 0 0 var(--space-md);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    /* Form elements with Apple styling */
+    input, textarea, select {
+      width: 100%;
+      padding: var(--space-md);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    label {
+      display: block;
+      margin-bottom: var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    label input, label textarea, label select {
+      margin-top: var(--space-xs);
+    }
+
+    .actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Enhanced buttons */
+    .btn {
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translate(-50%, -50%);
+    }
+
+    .btn:active::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      background: var(--card-hover);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      box-shadow: 0 4px 16px var(--accent-light);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px var(--accent-light);
+      transform: translateY(-3px);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: white;
+      box-shadow: 0 4px 16px rgba(255, 59, 48, 0.2);
+    }
+
+    .btn-danger:hover {
+      box-shadow: 0 8px 24px rgba(255, 59, 48, 0.3);
+      transform: translateY(-3px);
+    }
+
+    /* Pills and status indicators */
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: var(--space-xs) var(--space-sm);
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pill:hover {
+      transform: scale(1.05);
+    }
+
+    .status {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+    }
+
+    .muted {
+      color: var(--text-secondary);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Progress bar with Apple styling */
+    .progress {
+      height: 8px;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress > div {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 80%, var(--success)));
+      border-radius: 4px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress > div::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: progress-shine 2s infinite;
+    }
+
+    @keyframes progress-shine {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Kanban with enhanced styling */
+    .kanban {
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: 1fr;
+    }
+
+    @media(min-width: 980px) {
+      .kanban {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .col {
+      border: 2px dashed var(--line);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      min-height: 200px;
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .col:hover {
+      border-color: var(--accent);
+      background: var(--card-hover);
+      transform: scale(1.02);
+    }
+
+    .kan-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      margin-bottom: var(--space-sm);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: grab;
+    }
+
+    .kan-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .kan-card:active {
+      cursor: grabbing;
+      transform: rotate(2deg);
+    }
+
+    /* Footer */
+    footer {
+      padding: var(--space-2xl) 0;
+      border-top: 1px solid var(--line);
+      color: var(--text-secondary);
+      margin-top: var(--space-2xl);
+      backdrop-filter: blur(20px);
+      background: var(--glass);
+    }
+
+    /* Toast notifications */
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: var(--space-lg);
+      transform: translateX(-50%);
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 12px;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-lg);
+      font-weight: 500;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-8px);
+    }
+
+    /* Install button */
+    #btn-install {
+      position: fixed;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      border-radius: 16px;
+      padding: var(--space-md) var(--space-lg);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Search inputs */
+    input[placeholder*="Recherche"] {
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border-radius: 12px;
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--line);
+      max-width: 300px;
+    }
+
+    /* Micro-interactions */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Theme toggle enhancement */
+    #btn-theme {
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #btn-theme::after {
+      content: '🌙';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.7;
+    }
+
+    [data-theme="cupertino-dark"] #btn-theme::after {
+      content: '☀️';
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 var(--space-md);
+      }
+      
+      .card {
+        padding: var(--space-lg);
+      }
+      
+      .brand {
+        padding: var(--space-sm) 0;
+      }
+      
+      .bar {
+        padding: var(--space-xs) 0 var(--space-md);
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="container nav">
-      <div class="left">
-        <img src="media/logo.svg" class="logo" alt="RC">
-        <strong>Regards Croisés</strong>
-        <nav class="links">
-          <a href="#theme">Thème</a>
-          <a href="#objectifs">Objectifs</a>
-          <a href="#format">Format</a>
-          <a href="#app">App</a>
-        </nav>
+    <div class="container brand">
+      <div class="brand-left">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23007aff' rx='20'/%3E%3Ctext x='50' y='65' font-family='system-ui' font-size='40' font-weight='bold' text-anchor='middle' fill='white'%3ERC%3C/text%3E%3C/svg%3E" class="logo" alt="logo">
+        <div class="title"><h1>Regards Croisés — App</h1></div>
       </div>
-      <a class="cta" href="app.html">Ouvrir l’app</a>
+      <div class="actions">
+        <a class="btn" href="index.html">Accueil</a>
+        <button id="btn-theme" class="btn">Cupertino</button>
+      </div>
+    </div>
+    <div class="container bar" role="tablist">
+      <button class="seg" aria-selected="true" data-tab="home">Accueil</button>
+      <button class="seg" data-tab="articles">Articles</button>
+      <button class="seg" data-tab="episodes">Podcasts</button>
+      <button class="seg" data-tab="tasks">Tâches</button>
+      <button class="seg" data-tab="contacts">Contacts</button>
+      <button class="seg" data-tab="settings">Réglages</button>
     </div>
   </header>
 
-  <main>
-    <section class="container hero" id="top">
-      <div>
-        <span class="h-kicker">Série & média</span>
-        <h1 class="h-title">Un regard croisé, humanisant et lucide.</h1>
-        <p class="h-sub">Gérez vos tâches, contacts, articles & podcasts. Exportez un PDF élégant avec un récapitulatif automatique des actions réalisées.</p>
-        <div>
-          <a class="cta" href="app.html">Ouvrir l’app</a>
-          <a class="pill" style="margin-left:12px" href="#app">Découvrir l’outil</a>
+  <main class="container">
+    <section id="tab-home">
+      <div class="grid">
+        <div class="card">
+          <h3>Thème du mois</h3>
+          <form id="theme-form">
+            <label>Titre<input id="theme-title" placeholder="ex: Résilience — Des voix qui s'élèvent"></label>
+            <label>Description<textarea id="theme-desc" placeholder="Angle éditorial du mois…"></textarea></label>
+            <div class="actions"><button class="btn btn-primary" type="submit">Enregistrer</button></div>
+          </form>
+          <p class="muted" id="theme-preview"></p>
+        </div>
+        <div class="card">
+          <h3>Guidelines visuelles</h3>
+          <p class="muted">Design inspiré d'Apple avec glassmorphism, animations fluides, typographie San Francisco, espacements généreux et micro-interactions.</p>
         </div>
       </div>
-      <img src="media/cover.jpg" alt="aperçu">
     </section>
 
-    <section class="container cols" id="theme">
+    <section id="tab-articles" class="hidden">
       <div class="card">
-        <h3>THEME — JUILLET · AOÛT</h3>
-        <p class="muted">Regards croisés — <b>les conflits vus par les opprimés</b>. À travers 5 épisodes, la série donne la parole à celles et ceux qu’on n’entend jamais : civils, femmes, réfugiés, résistants invisibles.</p>
+        <h3>Articles</h3>
+        <form id="article-form">
+          <input type="hidden" id="article-id">
+          <label>Titre<input id="article-title" required></label>
+          <label>Tags<input id="article-tags" placeholder="société, conflit…"></label>
+          <label>Résumé<textarea id="article-summary"></textarea></label>
+          <div class="actions"><button type="submit" class="btn btn-primary">Enregistrer</button><button type="button" id="article-reset" class="btn">Annuler</button></div>
+        </form>
       </div>
+      <div class="actions" style="margin:14px 0"><input id="article-search" placeholder="Recherche…"><button id="article-clear" class="btn">Vider la liste</button></div>
+      <div id="article-list" class="grid"></div>
+    </section>
+
+    <section id="tab-episodes" class="hidden">
       <div class="card">
-        <h3>Intention éditoriale</h3>
-        <ul class="muted">
-          <li>Mettre en avant les témoignages authentiques</li>
-          <li>Proposer une réflexion engagée et pédagogique</li>
-          <li>Favoriser la compréhension, la nuance et l'empathie</li>
-          <li>Décentrer le regard occidental sur les conflits</li>
-        </ul>
+        <h3>Podcasts</h3>
+        <form id="ep-form">
+          <input type="hidden" id="ep-id">
+          <label>Titre<input id="ep-title" required></label>
+          <label>Invité(s)<input id="ep-guests"></label>
+          <label>Thème<input id="ep-theme"></label>
+          <label>Statut<select id="ep-status"><option>Brouillon</option><option>Publié</option></select></label>
+          <label>Date<input id="ep-date" type="date"></label>
+          <label>Image (URL)<input id="ep-image" type="url"></label>
+          <label>Audio (URL)<input id="ep-audio" type="url"></label>
+          <label>Lien média<input id="ep-link" type="url"></label>
+          <div class="actions"><button type="submit" class="btn btn-primary">Enregistrer</button><button type="button" id="ep-reset" class="btn">Annuler</button></div>
+        </form>
+      </div>
+      <div class="actions" style="margin:14px 0"><input id="ep-search" placeholder="Recherche…"><button id="ep-clear" class="btn">Vider la liste</button></div>
+      <div id="ep-list" class="grid"></div>
+    </section>
+
+    <section id="tab-tasks" class="hidden">
+      <div class="card">
+        <h3>Tâches</h3>
+        <form id="task-form">
+          <input type="hidden" id="task-id">
+          <label>Titre<input id="task-title" required placeholder="ex: Contacter journaliste…"></label>
+          <label>Statut<select id="task-status"><option>À faire</option><option>En cours</option><option>Terminé</option></select></label>
+          <label>Priorité<select id="task-priority"><option>Haute</option><option>Moyenne</option><option>Basse</option></select></label>
+          <label>Assignée(s) 👥<select id="task-assignees" multiple size="5" title="Ctrl/Cmd + clic pour multi-sélection"></select></label>
+          <div class="actions">
+            <input id="team-new" placeholder="Ajouter un prénom (ex: Alex)" style="max-width:320px">
+            <button id="team-add" type="button" class="btn">Ajouter au groupe</button>
+          </div>
+          <label>Échéance<input id="task-due" type="date"></label>
+          <label>Notes<textarea id="task-notes"></textarea></label>
+          <div class="actions"><button type="submit" class="btn btn-primary">Enregistrer</button><button type="button" id="task-reset" class="btn">Annuler</button></div>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="actions" style="justify-content:space-between;align-items:center">
+          <h3>Statistiques</h3>
+          <div class="actions"><button id="view-list" class="btn">Vue Liste</button><button id="view-kanban" class="btn">Vue Kanban</button></div>
+        </div>
+        <div class="actions" style="gap:14px;margin-bottom:10px">
+          <span class="pill">Total <b id="stat-task-total">0</b></span>
+          <span class="pill">Terminées <b id="stat-task-done">0</b></span>
+          <span class="pill">Haute priorité <b id="stat-task-high">0</b></span>
+          <span class="pill">En retard <b id="stat-task-late">0</b></span>
+          <span class="pill">≤ 7 jours <b id="stat-task-week">0</b></span>
+        </div>
+        <div class="progress"><div id="task-progress" style="width:0%"></div></div>
+      </div>
+
+      <div class="actions" style="margin:14px 0">
+        <input id="task-search" placeholder="Recherche titre / notes…">
+        <select id="task-sort">
+          <option value="updated">Tri : modifié récemment</option>
+          <option value="due">Tri : par échéance</option>
+          <option value="priority">Tri : par priorité</option>
+        </select>
+        <button id="task-clear" class="btn">Vider la liste</button>
+      </div>
+
+      <div id="task-list" class="grid"></div>
+      <div id="task-kanban" class="kanban hidden">
+        <div class="col" data-col="À faire"><h4>À faire</h4><div class="drop" data-status="À faire"></div></div>
+        <div class="col" data-col="En cours"><h4>En cours</h4><div class="drop" data-status="En cours"></div></div>
+        <div class="col" data-col="Terminé"><h4>Terminé</h4><div class="drop" data-status="Terminé"></div></div>
       </div>
     </section>
 
-    <section class="container cols" id="objectifs">
+    <section id="tab-contacts" class="hidden">
       <div class="card">
-        <h3>OBJECTIFS</h3>
-        <p class="muted">Donner une voix aux oubliés des conflits — populations civiles, minorités, activistes, femmes, réfugiés — pour comprendre comment elles vivent, résistent, reconstruisent.</p>
+        <h3>Contacts</h3>
+        <form id="contact-form">
+          <input type="hidden" id="contact-id">
+          <label>Nom<input id="contact-name" required></label>
+          <label>Type<select id="contact-type"><option>Organisation</option><option>Personnalité</option></select></label>
+          <label>Statut<select id="contact-status"><option>En contact</option><option>À contacter</option><option>Terminé</option><option>En attente</option></select></label>
+          <label>Priorité<select id="contact-priority"><option>Haute</option><option>Moyenne</option><option>Basse</option></select></label>
+          <label>Email<input id="contact-email" type="email"></label>
+          <label>Réseaux<input id="contact-social"></label>
+          <div class="actions"><button type="submit" class="btn btn-primary">Enregistrer</button><button type="button" id="contact-reset" class="btn">Annuler</button></div>
+        </form>
       </div>
       <div class="card">
-        <h3>FOCUS — Goma</h3>
-        <p class="muted">Explorer le quotidien au cœur des zones de conflit : survie, résilience, perte de repères, stratégies et normalité dans la durée.</p>
+        <h3>Répartition</h3>
+        <div class="actions" style="gap:14px;margin-bottom:10px">
+          <span class="pill">En contact <b id="st-contacted">0</b></span>
+          <span class="pill">À contacter <b id="st-tocontact">0</b></span>
+          <span class="pill">Terminé <b id="st-done">0</b></span>
+          <span class="pill">En attente <b id="st-pending">0</b></span>
+        </div>
+        <div id="contact-bars" class="grid"></div>
       </div>
+      <div class="actions" style="margin:14px 0"><input id="contact-search" placeholder="Recherche…"><button id="contact-clear" class="btn">Vider la liste</button></div>
+      <div id="contact-list" class="grid"></div>
     </section>
 
-    <section class="container bento" id="format">
-      <div class="card" style="grid-row:span 2">
-        <h3>FORMAT</h3>
-        <p class="muted">Vidéos reportage ou témoignage filmé, visioconférence ou voix off, portrait croisé, mix reportage / table ronde.</p>
-        <p class="muted">Durée : 4 à 5 minutes.</p>
+    <section id="tab-settings" class="hidden">
+      <div class="card">
+        <h3>Équipe (assignation par prénoms)</h3>
+        <div class="actions">
+          <input id="team-input" placeholder="Ajouter un prénom (ex: Alex)" style="max-width:360px">
+          <button id="team-add-main" class="btn btn-primary" type="button">Ajouter</button>
+        </div>
+        <div id="team-list" class="actions" style="margin-top:12px"></div>
       </div>
       <div class="card">
-        <h3>PROFILS</h3>
-        <p class="muted">Artistes engagés, journalistes, ONG locales, réfugiés, humanitaires, chercheurs. Jeunes, psychologues communautaires, militantes féministes, victimes, sociologues.</p>
+        <h3>Export PDF</h3>
+        <p class="muted">Logo, stats, échéances, récapitulatif des tâches terminées.</p>
+        <button id="btn-pdf" class="btn btn-primary">Exporter le rapport PDF</button>
       </div>
-      <div class="card">
-        <h3>Bonus</h3>
-        <p class="muted">Extraits d’un documentaire d’une ONG internationale oeuvrant pour la paix (HWPL).</p>
-      </div>
-    </section>
-
-    <section class="container cols" id="app">
-      <div class="card">
-        <h3>L’app qui vous accompagne</h3>
-        <p class="muted">Tâches (assignées à <b>Jude</b>, <b>Grace</b> + autres), échéances, notes, vue Kanban & statistiques, thème du mois. Export PDF avec récapitulatif écrit.</p>
-        <a class="cta" href="app.html" style="margin-top:12px;display:inline-block">Ouvrir l’app</a>
-      </div>
-      <div class="card">
-        <h3>Déploiement simple</h3>
-        <p class="muted">PWA hors‑ligne, service worker, manifest. Hébergement facile via GitHub Pages — aucun serveur requis.</p>
+              <div class="card">
+        <h3>Maintenance</h3>
+        <div class="actions">
+          <button id="btn-demo" class="btn">Recréer données démo</button>
+          <button id="btn-reset" class="btn btn-danger">Réinitialiser tout</button>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="container">
-    <small>© <span id="year"></span> Regards Croisés — Série & média</small>
-  </footer>
+  <button id="btn-install" class="btn btn-primary" style="display:none">Installer l'app</button>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <footer class="container"><small>© <span id="year"></span> Regards Croisés</small></footer>
 
   <script>
-    document.querySelector('#year').textContent = new Date().getFullYear();
+    const KEY='rc-data-cupertino-air-v9', THEME_KEY='rc-theme', $=s=>document.querySelector(s);
+    const State={data:{articles:[],episodes:[],tasks:[],contacts:[],theme:{title:'',desc:''},team:[]},
+      save(){localStorage.setItem(KEY,JSON.stringify(this.data))},
+      load(){const r=localStorage.getItem(KEY);this.data=r?JSON.parse(r):{articles:[],episodes:[],tasks:[],contacts:[],theme:{title:'',desc:''},team:['Jude','Grace']}}};
+
+    function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1400); }
+    function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); const map={cupertino:'Cupertino', 'cupertino-dark':'Cupertino (sombre)'}; document.getElementById('btn-theme').textContent=map[t]||t; localStorage.setItem(THEME_KEY,t); }
+    function toggleTheme(){ const cur=document.documentElement.getAttribute('data-theme')||'cupertino'; const order=['cupertino','cupertino-dark']; const next=order[(order.indexOf(cur)+1)%order.length]; applyTheme(next); }
+    function uid(){ return Math.random().toString(36).slice(2,9); }
+    function stringifyTags(v){ return (v||'').split(',').map(t=>t.trim()).filter(Boolean); }
+    function matches(q, ...f){ q=q.toLowerCase(); return f.some(x=>(x||'').toLowerCase().includes(q)); }
+    function selectTab(name){ document.querySelectorAll('.seg').forEach(b=>b.setAttribute('aria-selected', String(b.dataset.tab===name))); document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden')); document.querySelector('#tab-'+name).classList.remove('hidden'); }
+    function refreshAssigneeOptions(){ const sel=document.getElementById('task-assignees'); if(!sel) return; const selected=Array.from(sel.selectedOptions).map(o=>o.value); sel.innerHTML=(State.data.team||[]).map(n=>`<option value="${n}">${n}</option>`).join(''); selected.forEach(v=>{ const o=[...sel.options].find(x=>x.value===v); if(o) o.selected=true; }); }
+
+    // Articles
+    function renderArticles(list=State.data.articles){
+      const q=$('#article-search')?.value?.trim().toLowerCase()||'';
+      const filtered=q?list.filter(a=>matches(q,a.title,a.summary,(a.tags||[]).join(','))):list;
+      const wrap=$('#article-list'); if(!wrap) return; wrap.innerHTML='';
+      if(!filtered.length){ wrap.innerHTML='<div class="card muted">Aucun article.</div>'; return; }
+      for(const a of filtered){
+        const el=document.createElement('div'); el.className='card';
+        el.innerHTML = `<h3>${a.title}</h3><p class="muted">${a.summary||''}</p>
+          <div class="actions" style="margin:8px 0">${(a.tags||[]).map(t=>`<span class="pill">#${t}</span>`).join('')}</div>
+          <div class="actions"><button class="btn" data-edit="${a.id}">Éditer</button><button class="btn btn-danger" data-del="${a.id}">Supprimer</button></div>`;
+        wrap.appendChild(el);
+      }
+      wrap.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editArticle(b.dataset.edit));
+      wrap.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>delArticle(b.dataset.del));
+    }
+    function editArticle(id){ const a=State.data.articles.find(x=>x.id===id); if(!a) return; $('#article-id').value=a.id; $('#article-title').value=a.title; $('#article-tags').value=(a.tags||[]).join(', '); $('#article-summary').value=a.summary||''; window.scrollTo({top:0,behavior:'smooth'}); selectTab('articles'); }
+    function delArticle(id){ if(!confirm('Supprimer cet article ?')) return; State.data.articles=State.data.articles.filter(x=>x.id!==id); State.save(); renderArticles(); toast('Article supprimé'); }
+
+    // Episodes
+    function renderEpisodes(list=State.data.episodes){
+      const q=$('#ep-search')?.value?.trim().toLowerCase()||'';
+      const filtered=q?list.filter(e=>matches(q,e.title,e.guests,e.theme,e.status,e.date)):list;
+      const wrap=$('#ep-list'); if(!wrap) return; wrap.innerHTML='';
+      if(!filtered.length){ wrap.innerHTML='<div class="card muted">Aucun épisode.</div>'; return; }
+      for(const e of filtered){
+        const el=document.createElement('div'); el.className='card';
+        const img=e.image?`<img src="${e.image}" alt="visuel" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-bottom:10px">`:'';
+        const audio=e.audio?`<audio controls style="width:100%;margin-top:8px"><source src="${e.audio}"></audio>`:'';
+        el.innerHTML=`${img}<h3>${e.title}</h3>
+          <p class="muted">${e.status||'Brouillon'}${e.date?(' • '+e.date):''} • Invité(s): ${e.guests||'—'} • Thème: ${e.theme||'—'}</p>
+          ${e.link?`<a class="btn" href="${e.link}" target="_blank" rel="noopener">Écouter</a>`:''}
+          ${audio}
+          <div class="actions" style="margin-top:10px"><button class="btn" data-ep-edit="${e.id}">Éditer</button><button class="btn btn-danger" data-ep-del="${e.id}">Supprimer</button></div>`;
+        wrap.appendChild(el);
+      }
+      wrap.querySelectorAll('[data-ep-edit]').forEach(b=>b.onclick=()=>editEpisode(b.dataset.epEdit));
+      wrap.querySelectorAll('[data-ep-del]').forEach(b=>b.onclick=()=>delEpisode(b.dataset.epDel));
+    }
+    function editEpisode(id){ const e=State.data.episodes.find(x=>x.id===id); if(!e) return; $('#ep-id').value=e.id; $('#ep-title').value=e.title; $('#ep-guests').value=e.guests||''; $('#ep-theme').value=e.theme||''; $('#ep-link').value=e.link||''; $('#ep-image').value=e.image||''; $('#ep-audio').value=e.audio||''; $('#ep-status').value=e.status||'Brouillon'; $('#ep-date').value=e.date||''; window.scrollTo({top:0,behavior:'smooth'}); selectTab('episodes'); }
+    function delEpisode(id){ if(!confirm('Supprimer cet épisode ?')) return; State.data.episodes=State.data.episodes.filter(x=>x.id!==id); State.save(); renderEpisodes(); toast('Épisode supprimé'); }
+
+    // Tasks
+    function computeTaskStats(){
+      const t=State.data.tasks;
+      const total=t.length, done=t.filter(x=>x.status==='Terminé').length, high=t.filter(x=>x.priority==='Haute').length;
+      const now=new Date(), weekAhead=new Date(); weekAhead.setDate(now.getDate()+7);
+      const late=t.filter(x=>x.status!=='Terminé' && x.due && new Date(x.due) < now).length;
+      const week=t.filter(x=>x.status!=='Terminé' && x.due && new Date(x.due) <= weekAhead && new Date(x.due)>=now).length;
+      $('#stat-task-total').textContent=total; $('#stat-task-done').textContent=done; $('#stat-task-high').textContent=high; $('#stat-task-late').textContent=late; $('#stat-task-week').textContent=week;
+      const pct = total? Math.round((done/total)*100):0; $('#task-progress').style.width=pct+'%'; $('#task-progress').title=pct+'%';
+    }
+    function sortTasks(list){
+      const mode = $('#task-sort').value; const priRank = {Haute:0,Moyenne:1,Basse:2};
+      if(mode==='due') return list.slice().sort((a,b)=> (a.due||'').localeCompare(b.due||''));
+      if(mode==='priority') return list.slice().sort((a,b)=> (priRank[a.priority]??9)-(priRank[b.priority]??9));
+      return list.slice();
+    }
+    function renderTasks(list=State.data.tasks){
+      computeTaskStats();
+      const q=$('#task-search')?.value?.trim().toLowerCase()||'';
+      const filtered=(q?list.filter(t=>matches(q,t.title,t.notes,(t.assignees||[]).join(','))):list);
+      const sorted=sortTasks(filtered);
+      const wrap=$('#task-list'); if(!wrap) return; wrap.innerHTML='';
+      if(!sorted.length){ wrap.innerHTML='<div class="card muted">Aucune tâche.</div>'; return; }
+      for(const t of sorted){
+        const el=document.createElement('div'); el.className='card'; el.draggable=true; el.dataset.id=t.id;
+        const who=t.assignees||[]; const due=t.due?` • Échéance: ${t.due}`:'';
+        const overdue = t.status!=='Terminé' && t.due && (new Date(t.due) < new Date());
+        el.innerHTML = `<h3>${t.title}</h3>
+          <div class="actions" style="margin:8px 0">
+            <span class="status">${t.status}</span>
+            <span class="status">${t.priority}</span>
+            ${who.length?who.map(n=>`<span class="pill">${n}</span>`).join(''): '<span class="pill">—</span>'}
+          </div>
+          <p class="muted">${t.notes||''}${due}</p>
+          <div class="actions"><button class="btn" data-task-edit="${t.id}">Éditer</button><button class="btn btn-danger" data-task-del="${t.id}">Supprimer</button></div>`;
+        if(overdue) el.style.outline='2px solid var(--danger)';
+        wrap.appendChild(el);
+      }
+      wrap.querySelectorAll('[data-task-edit]').forEach(b=>b.onclick=()=>editTask(b.dataset.taskEdit));
+      wrap.querySelectorAll('[data-task-del]').forEach(b=>b.onclick=()=>delTask(b.dataset.taskDel));
+      wrap.querySelectorAll('#task-list .card').forEach(c=>{ c.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', c.dataset.id); }); });
+    }
+    function buildKanban(){
+      const areas = document.querySelectorAll('#task-kanban .drop');
+      areas.forEach(a=>{
+        a.innerHTML=''; const status=a.dataset.status;
+        const items = State.data.tasks.filter(t=>t.status===status);
+        for(const t of items){
+          const k=document.createElement('div'); k.className='kan-card'; k.draggable=true; k.dataset.id=t.id;
+          const who=t.assignees||[];
+          k.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><b>${t.title}</b><span class="status">${t.priority}</span></div>
+          <div class="muted">${(who.join(', ')||'—')} ${t.due?(' • '+t.due):''}</div>`;
+          k.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', t.id); });
+          a.appendChild(k);
+        }
+        a.addEventListener('dragover', e=>e.preventDefault());
+        a.addEventListener('drop', e=>{
+          e.preventDefault();
+          const id=e.dataTransfer.getData('text/plain');
+          const idx=State.data.tasks.findIndex(x=>x.id===id); if(idx<0) return;
+          const prev=State.data.tasks[idx];
+          State.data.tasks[idx]={...prev, status:status, completedAt:(status==='Terminé' ? (prev.completedAt||new Date().toISOString()) : (prev.completedAt||undefined))};
+          State.save(); renderTasks(); buildKanban(); toast('Statut mis à jour');
+        });
+      });
+    }
+    function editTask(id){
+      const t=State.data.tasks.find(x=>x.id===id); if(!t) return;
+      $('#task-id').value=t.id; $('#task-title').value=t.title; $('#task-status').value=t.status; $('#task-priority').value=t.priority; $('#task-notes').value=t.notes||''; $('#task-due').value=t.due||'';
+      refreshAssigneeOptions(); const sel=$('#task-assignees'); [...sel.options].forEach(o=>o.selected=(t.assignees||[]).includes(o.value));
+      window.scrollTo({top:0,behavior:'smooth'}); selectTab('tasks');
+    }
+    function delTask(id){ if(!confirm('Supprimer cette tâche ?')) return; State.data.tasks=State.data.tasks.filter(x=>x.id!==id); State.save(); renderTasks(); buildKanban(); toast('Tâche supprimée'); }
+
+    // Contacts
+    function computeContactStats(){
+      const c=State.data.contacts, by=s=>c.filter(x=>x.status===s).length;
+      $('#st-contacted').textContent=by('En contact'); $('#st-tocontact').textContent=by('À contacter'); $('#st-done').textContent=by('Terminé'); $('#st-pending').textContent=by('En attente');
+      const total=c.length||1, labels=[['En contact','st-contacted'],['À contacter','st-tocontact'],['Terminé','st-done'],['En attente','st-pending']];
+      const wrap=document.getElementById('contact-bars'); if(!wrap) return; wrap.innerHTML='';
+      labels.forEach(([label, id])=>{
+        const val = parseInt(document.getElementById(id).textContent)||0;
+        const pct = Math.round((val/total)*100);
+        const card=document.createElement('div'); card.className='card';
+        card.innerHTML=`<div style="display:flex;justify-content:space-between"><span class="status">${label}</span><b>${val}</b></div>
+          <div class="progress" style="margin-top:10px"><div style="width:${pct}%"></div></div>`;
+        wrap.appendChild(card);
+      });
+    }
+    function renderContacts(list=State.data.contacts){
+      computeContactStats();
+      const q=$('#contact-search')?.value?.trim().toLowerCase()||'';
+      const filtered=q?list.filter(c=>matches(q,c.name,c.email,c.social)):list;
+      const wrap=$('#contact-list'); if(!wrap)return; wrap.innerHTML='';
+      if(!filtered.length){ wrap.innerHTML='<div class="card muted">Aucun contact.</div>'; return; }
+      for(const c of filtered){
+        const el=document.createElement('div'); el.className='card';
+        el.innerHTML=`<h3>${c.name}</h3>
+          <div class="actions" style="margin:8px 0">
+            <span class="status">${c.status}</span>
+            <span class="status">${c.type}</span>
+            <span class="status">${c.priority}</span>
+          </div>
+          <p class="muted">${c.email||''} ${c.social?('• '+c.social):''}</p>
+          <div class="actions"><button class="btn" data-contact-edit="${c.id}">Éditer</button><button class="btn btn-danger" data-contact-del="${c.id}">Supprimer</button></div>`;
+        wrap.appendChild(el);
+      }
+      wrap.querySelectorAll('[data-contact-edit]').forEach(b=>b.onclick=()=>editContact(b.dataset.contactEdit));
+      wrap.querySelectorAll('[data-contact-del]').forEach(b=>b.onclick=()=>delContact(b.dataset.contactDel));
+    }
+    function editContact(id){ const c=State.data.contacts.find(x=>x.id===id); if(!c) return; $('#contact-id').value=c.id; $('#contact-name').value=c.name; $('#contact-type').value=c.type; $('#contact-status').value=c.status; $('#contact-priority').value=c.priority; $('#contact-email').value=c.email||''; $('#contact-social').value=c.social||''; window.scrollTo({top:0,behavior:'smooth'}); selectTab('contacts'); }
+    function delContact(id){ if(!confirm('Supprimer ce contact ?')) return; State.data.contacts=State.data.contacts.filter(x=>x.id!==id); State.save(); renderContacts(); renderTasks(); buildKanban(); toast('Contact supprimé'); }
+
+    // Theme
+    function updateThemePreview(){ const t=State.data.theme||{title:'',desc:''}; $('#theme-title').value=t.title||''; $('#theme-desc').value=t.desc||''; $('#theme-preview').textContent=t.title?(t.title+' — '+(t.desc||'')):'Aucun thème défini.'; }
+
+    // PDF
+    async function ensureJsPdf(){
+      if(!window.jspdf){ await new Promise((res, rej)=>{ const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js'; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+      if(!window.jspdf || !window.jspdf.jsPDF) throw new Error('jsPDF indisponible');
+      if(!window.jspdfAutoTable){ await new Promise((res, rej)=>{ const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js'; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+    }
+    async function exportPDF(){
+      try{ await ensureJsPdf(); }catch(e){ alert('Impossible de charger jsPDF.'); return; }
+      const { jsPDF } = window.jspdf;
+      async function dataURL(url){ const res=await fetch(url); const b=await res.blob(); return await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result); fr.readAsDataURL(b); }); }
+      const logo = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23007aff" rx="20"/%3E%3Ctext x="50" y="65" font-family="system-ui" font-size="40" font-weight="bold" text-anchor="middle" fill="white"%3ERC%3C/text%3E%3C/svg%3E';
+      const doc = new jsPDF({ unit:'pt', format:'a4' }); const pad=48; let y=pad;
+      doc.setFillColor(245,245,247); doc.rect(0,0,doc.internal.pageSize.getWidth(),72,'F');
+      try{ doc.addImage(logo,'SVG', pad, 20, 32, 32); }catch(_){}
+      doc.setFontSize(16); doc.text('Regards Croisés — Rapport', pad+44, 36);
+      doc.setFontSize(10); doc.setTextColor(110,110,115); doc.text(new Date().toLocaleString(), pad+44, 54);
+      doc.setTextColor(0); y = 96;
+
+      const theme = State.data.theme || {title:'',desc:''};
+      doc.setDrawColor(210,210,215); doc.roundedRect(pad,y,523,84,12,12);
+      doc.setFontSize(12); doc.text('Thème du mois', pad+14, y+22);
+      doc.setFontSize(14); doc.text(theme.title||'—', pad+14, y+44);
+      doc.setFontSize(11); doc.setTextColor(110,110,115); doc.text((theme.desc||'—').substring(0,140), pad+14, y+64);
+      doc.setTextColor(0); y += 108;
+
+      const t=State.data.tasks, total=t.length, done=t.filter(x=>x.status==='Terminé').length, high=t.filter(x=>x.priority==='Haute').length;
+      const now=new Date(), weekAhead=new Date(); weekAhead.setDate(now.getDate()+7);
+      const late=t.filter(x=>x.status!=='Terminé' && x.due && new Date(x.due) < now).length;
+      const week=t.filter(x=>x.status!=='Terminé' && x.due && new Date(x.due) <= weekAhead && new Date(x.due)>=now).length;
+      const pct = total? Math.round((done/total)*100):0;
+      doc.setDrawColor(210,210,215); doc.roundedRect(pad,y,523,96,12,12);
+      doc.setFontSize(12); doc.text('Tâches — Statistiques', pad+14, y+22);
+      doc.setFontSize(11);
+      doc.text(`Total: ${total}`, pad+14, y+44); doc.text(`Terminées: ${done}`, pad+128, y+44); doc.text(`Haute priorité: ${high}`, pad+270, y+44);
+      doc.text(`En retard: ${late}`, pad+14, y+64); doc.text(`≤ 7 jours: ${week}`, pad+128, y+64);
+      doc.setDrawColor(210,210,215); doc.rect(pad+14,y+74,500,12); doc.setFillColor(0,122,255); doc.rect(pad+14,y+74,5*pct,12,'F');
+      y += 120;
+
+      const st = { 'En contact': State.data.contacts.filter(c=>c.status==='En contact').length, 'À contacter': State.data.contacts.filter(c=>c.status==='À contacter').length, 'Terminé': State.data.contacts.filter(c=>c.status==='Terminé').length, 'En attente': State.data.contacts.filter(c=>c.status==='En attente').length };
+      doc.setDrawColor(210,210,215); doc.roundedRect(pad,y,523,100,12,12); doc.setFontSize(12); doc.text('Contacts — Répartition', pad+14, y+22);
+      let by=y+36; let i=0; const colors=[[0,122,255],[29,29,31],[110,110,115],[211,211,215]];
+      Object.entries(st).forEach(([label,val])=>{ const totalC=Math.max(1, State.data.contacts.length); const w=Math.min(500,(val/totalC)*500); const c=colors[i%colors.length]; i++; doc.setFillColor(c[0],c[1],c[2]); doc.rect(pad+14,by,w,12,'F'); doc.setTextColor(0); doc.text(`${label}: ${val}`, pad+520, by+9, {align:'right'}); by+=20; });
+      y += 120;
+
+      const upcoming = State.data.tasks.filter(x=>x.status!=='Terminé' && x.due).sort((a,b)=> (a.due||'').localeCompare(b.due||'')).slice(0,6);
+      doc.setFontSize(13); doc.text('À venir — prochaines échéances', pad, y); y+=18; doc.setFontSize(11);
+      if(!upcoming.length){ doc.text('Aucune échéance planifiée.', pad, y); y+=16; }
+      else { upcoming.forEach(ti=>{ const who=(ti.assignees||[]).join(', ')||'—'; doc.text(`• ${ti.due} — ${ti.title} (${who})`, pad, y); y+=16; }); }
+
+      y += 10; const doneTasks = State.data.tasks.filter(t=>t.status==='Terminé');
+      doc.setFontSize(13); doc.text('Résumé des actions réalisées', pad, y); y+=18; doc.setFontSize(11);
+      if(!doneTasks.length){ doc.text('Aucune tâche terminée pour le moment.', pad, y); y+=18; }
+      else { doneTasks.forEach(tk=>{ const who=(tk.assignees||[]).join(', ')||'non assignée'; const when=tk.completedAt? new Date(tk.completedAt).toLocaleDateString() : 'date inconnue'; doc.text(`• ${tk.title} — ${who} — terminé le ${when}`, pad, y); y+=16; }); }
+
+      const taskRows = State.data.tasks.map(t=>[t.title,t.status,t.priority,(t.assignees||[]).join(', '), (t.due||'—'), (t.notes||'').slice(0,72)]);
+      doc.autoTable({ startY:y+10, head:[['Tâche','Statut','Priorité','Assignée(s)','Échéance','Notes']], body:taskRows, styles:{fontSize:9,cellPadding:5}, headStyles:{fillColor:[0,122,255],textColor:255}, alternateRowStyles:{fillColor:[245,245,245]} });
+      const contactRows = State.data.contacts.map(c=>[c.name,c.type,c.status,c.priority,(c.email||''),(c.social||'')]);
+      doc.autoTable({ startY:doc.lastAutoTable.finalY+18, head:[['Nom','Type','Statut','Priorité','Email','Réseaux']], body:contactRows, styles:{fontSize:9,cellPadding:5}, headStyles:{fillColor:[29,29,31],textColor:255}, alternateRowStyles:{fillColor:[245,245,245]} });
+
+      const pageCount=doc.internal.getNumberOfPages(); for(let i=1;i<=pageCount;i++){ doc.setPage(i); const w=doc.internal.pageSize.getWidth(); doc.setFontSize(9); doc.setTextColor(110,110,115); doc.text(`© Regards Croisés — Rapport généré le ${new Date().toLocaleString()} — Page ${i}/${pageCount}`, w/2, doc.internal.pageSize.getHeight()-18, {align:'center'}); }
+      doc.save(`RC-Rapport-${Date.now()}.pdf`);
+    }
+
+    // Init & events
+    function renderAll(){ renderArticles(); renderEpisodes(); renderTasks(); renderContacts(); updateThemePreview(); refreshAssigneeOptions(); buildKanban(); renderTeam(); document.querySelector('#year').textContent = new Date().getFullYear(); }
+
+    function renderTeam(){
+      const wrap=$('#team-list'); wrap.innerHTML='';
+      if(!State.data.team.length){ wrap.innerHTML='<span class="muted">Aucun membre pour le moment.</span>'; }
+      State.data.team.forEach(name=>{
+        const btn=document.createElement('button'); btn.className='btn'; btn.textContent=name; btn.title='Supprimer';
+        btn.onclick=()=>{ if(!confirm('Retirer '+name+' ?')) return;
+          State.data.team=State.data.team.filter(n=>n!==name);
+          State.data.tasks = State.data.tasks.map(t=>({...t, assignees:(t.assignees||[]).filter(a=>a!==name)}));
+          State.save(); renderTeam(); refreshAssigneeOptions(); renderTasks(); buildKanban();
+        };
+        wrap.appendChild(btn);
+      });
+    }
+
+    function seedDemo(){
+      State.data = {
+        theme: { title:'Résilience — Des voix qui s'élèvent', desc:'Ce mois‑ci, résilience des civils face aux conflits.' },
+        team: ['Jude','Grace','Alex'],
+        articles: [ { id: uid(), title:'Pourquoi « Regards croisés » ?', tags:['éditorial','apolitique'], summary:'Témoignages authentiques, nuance, contre‑récit.' } ],
+        episodes: [ { id: uid(), title:'Épisode 1 — Vivre sous le conflit', guests:'journaliste local·e', theme:'Goma (RDC)', status:'Publié', date:new Date().toISOString().slice(0,10), image:'', audio:'', link:'' } ],
+        tasks: [
+          { id: uid(), title:'Contacter journaliste local', status:'En cours', priority:'Haute', notes:'Pitch + créneau', assignees:['Grace'], due:new Date(Date.now()+3*86400000).toISOString().slice(0,10) },
+          { id: uid(), title:'Rédiger article éditorial', status:'À faire', priority:'Moyenne', notes:'', assignees:['Jude'], due:new Date(Date.now()+9*86400000).toISOString().slice(0,10) },
+          { id: uid(), title:'Monter épisode 1', status:'Terminé', priority:'Haute', notes:'Valider compression', assignees:['Grace','Alex'], completedAt:new Date().toISOString(), due:new Date().toISOString().slice(0,10) }
+        ],
+        contacts: [
+          { id: uid(), name:'Médecins du Monde', type:'Organisation', status:'En contact', priority:'Moyenne', email:'contact@medecinsdumonde.org', social:'@MDM' },
+          { id: uid(), name:'J. Dupont (Journaliste)', type:'Personnalité', status:'À contacter', priority:'Haute', email:'j.dupont@example.com', social:'@jdupont' }
+        ]
+      };
+      State.save(); renderAll();
+    }
+
+    function init(){
+      applyTheme(localStorage.getItem(THEME_KEY) || 'cupertino');
+      document.getElementById('btn-theme').onclick = toggleTheme;
+
+      State.load();
+      if(!State.data.team || !State.data.team.length){ State.data.team=['Jude','Grace']; }
+      if(!State.data.articles.length && !State.data.episodes.length && !State.data.tasks.length && !State.data.contacts.length){ seedDemo(); } else { renderAll(); }
+
+      // Tabs
+      document.querySelectorAll('.seg').forEach(btn=>btn.onclick=()=>selectTab(btn.dataset.tab));
+
+      // Shortcuts
+      document.addEventListener('keydown', (e)=>{
+        if(e.key==='/'){ e.preventDefault(); const tab=document.querySelector('.seg[aria-selected="true"]').dataset.tab; const field = document.querySelector(`#tab-${tab} input[placeholder^="Recherche"]`); if(field) field.focus(); }
+        if(e.key.toLowerCase()==='t'){ selectTab('tasks'); document.getElementById('task-title').focus(); }
+        if(e.key.toLowerCase()==='n'){ const tab=document.querySelector('.seg[aria-selected="true"]').dataset.tab; if(tab==='tasks'){ document.getElementById('task-title').focus(); } else if(tab==='articles'){ document.getElementById('article-title').focus(); } else if(tab==='episodes'){ document.getElementById('ep-title').focus(); } }
+      });
+
+      // Team
+      const addTeam = (sel)=>{ const name=document.querySelector(sel).value.trim(); if(!name) return; if(State.data.team.includes(name)){ toast('Existe déjà'); return; } State.data.team.push(name); State.save(); document.querySelector(sel).value=''; renderTeam(); refreshAssigneeOptions(); toast('Ajouté'); };
+      document.getElementById('team-add-main').onclick=()=>addTeam('#team-input');
+      document.getElementById('team-add').onclick=()=>addTeam('#team-new');
+
+      // Articles
+      document.getElementById('article-form')?.addEventListener('submit', e=>{ e.preventDefault(); const id=document.getElementById('article-id').value || uid(); const entry={ id, title:document.getElementById('article-title').value.trim(), tags:stringifyTags(document.getElementById('article-tags').value), summary:document.getElementById('article-summary').value.trim() }; if(!entry.title){ alert('Titre requis'); return; } const ix=State.data.articles.findIndex(a=>a.id===id); if(ix>-1) State.data.articles[ix]=entry; else State.data.articles.unshift(entry); State.save(); e.target.reset(); document.getElementById('article-id').value=''; renderArticles(); toast('Article enregistré'); });
+      document.getElementById('article-reset').onclick=()=>{ document.getElementById('article-form').reset(); document.getElementById('article-id').value=''; };
+      document.getElementById('article-search').oninput=()=>renderArticles();
+      document.getElementById('article-clear').onclick=()=>{ if(confirm('Supprimer tous les articles ?')){ State.data.articles=[]; State.save(); renderArticles(); }};
+
+      // Episodes
+      document.getElementById('ep-form')?.addEventListener('submit', e=>{ e.preventDefault(); const id=document.getElementById('ep-id').value || uid(); const entry={ id, title:document.getElementById('ep-title').value.trim(), guests:document.getElementById('ep-guests').value.trim(), theme:document.getElementById('ep-theme').value.trim(), image:document.getElementById('ep-image').value.trim(), audio:document.getElementById('ep-audio').value.trim(), link:document.getElementById('ep-link').value.trim(), status:document.getElementById('ep-status').value, date:document.getElementById('ep-date').value }; if(!entry.title){ alert('Titre requis'); return; } const ix=State.data.episodes.findIndex(a=>a.id===id); if(ix>-1) State.data.episodes[ix]=entry; else State.data.episodes.unshift(entry); State.save(); e.target.reset(); document.getElementById('ep-id').value=''; renderEpisodes(); toast('Épisode enregistré'); });
+      document.getElementById('ep-reset').onclick=()=>{ document.getElementById('ep-form').reset(); document.getElementById('ep-id').value=''; };
+      document.getElementById('ep-search').oninput=()=>renderEpisodes();
+      document.getElementById('ep-clear').onclick=()=>{ if(confirm('Supprimer tous les épisodes ?')){ State.data.episodes=[]; State.save(); renderEpisodes(); }};
+
+      // Tasks
+      document.getElementById('task-form')?.addEventListener('submit', e=>{
+        e.preventDefault(); const id=document.getElementById('task-id').value || uid();
+        const assignees = Array.from(document.getElementById('task-assignees').selectedOptions).map(o=>o.value);
+        const entry={ id, title:document.getElementById('task-title').value.trim(), status:document.getElementById('task-status').value, priority:document.getElementById('task-priority').value, notes:document.getElementById('task-notes').value.trim(), assignees, due:document.getElementById('task-due').value };
+        if(!entry.title){ alert('Titre requis'); return; }
+        const ix=State.data.tasks.findIndex(a=>a.id===id);
+        if(ix>-1){
+          const prev=State.data.tasks[ix];
+          if(entry.status==='Terminé' && prev.status!=='Terminé' && !prev.completedAt){ entry.completedAt = new Date().toISOString(); }
+          if(prev.completedAt && entry.status==='Terminé') entry.completedAt = prev.completedAt;
+          State.data.tasks[ix]=entry;
+        }else{
+          if(entry.status==='Terminé') entry.completedAt=new Date().toISOString();
+          State.data.tasks.unshift(entry);
+        }
+        State.save(); e.target.reset(); document.getElementById('task-id').value=''; renderTasks(); buildKanban(); toast('Tâche enregistrée');
+      });
+      document.getElementById('task-reset').onclick=()=>{ document.getElementById('task-form').reset(); document.getElementById('task-id').value=''; };
+      document.getElementById('task-search').oninput=()=>renderTasks();
+      document.getElementById('task-sort').onchange=()=>renderTasks();
+      document.getElementById('task-clear').onclick=()=>{ if(confirm('Supprimer toutes les tâches ?')){ State.data.tasks=[]; State.save(); renderTasks(); buildKanban(); }};
+      document.getElementById('view-list').onclick=()=>{ document.getElementById('task-list').classList.remove('hidden'); document.getElementById('task-kanban').classList.add('hidden'); };
+      document.getElementById('view-kanban').onclick=()=>{ document.getElementById('task-kanban').classList.remove('hidden'); document.getElementById('task-list').classList.add('hidden'); buildKanban(); };
+
+      // Contacts
+      document.getElementById('contact-form')?.addEventListener('submit', e=>{ e.preventDefault(); const id=document.getElementById('contact-id').value || uid(); const entry={ id, name:document.getElementById('contact-name').value.trim(), type:document.getElementById('contact-type').value, status:document.getElementById('contact-status').value, priority:document.getElementById('contact-priority').value, email:document.getElementById('contact-email').value.trim(), social:document.getElementById('contact-social').value.trim() }; if(!entry.name){ alert('Nom requis'); return; } const ix=State.data.contacts.findIndex(a=>a.id===id); if(ix>-1) State.data.contacts[ix]=entry; else State.data.contacts.unshift(entry); State.save(); e.target.reset(); document.getElementById('contact-id').value=''; renderContacts(); toast('Contact enregistré'); });
+      document.getElementById('contact-reset').onclick=()=>{ document.getElementById('contact-form').reset(); document.getElementById('contact-id').value=''; };
+      document.getElementById('contact-search').oninput=()=>renderContacts();
+      document.getElementById('contact-clear').onclick=()=>{ if(confirm('Supprimer tous les contacts ?')){ State.data.contacts=[]; State.save(); renderContacts(); }};
+
+      // Theme form
+      document.getElementById('theme-form').addEventListener('submit', e=>{ e.preventDefault(); State.data.theme={ title:document.getElementById('theme-title').value.trim(), desc:document.getElementById('theme-desc').value.trim() }; State.save(); updateThemePreview(); toast('Thème mis à jour'); });
+
+      // PDF
+      document.getElementById('btn-pdf').onclick=exportPDF;
+
+      // Reset + Demo
+      document.getElementById('btn-reset').onclick=()=>{ if(confirm('Tout réinitialiser ?')){ localStorage.removeItem(KEY); State.load(); renderAll(); toast('Réinitialisé'); } };
+      document.getElementById('btn-demo').onclick=()=>{ if(confirm('Écraser les données actuelles par une démo ?')) seedDemo(); };
+    }
+
+    // PWA
+    let deferredPrompt; const installBtn=document.getElementById('btn-install');
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt=e; installBtn.style.display='block'; });
+    installBtn?.addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; installBtn.style.display='none'; });
+    if('serviceWorker' in navigator){ window.addEventListener('load', ()=>navigator.serviceWorker.register('./sw.js')); }
+
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
