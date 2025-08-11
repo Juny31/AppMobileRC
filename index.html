@@ -1708,10 +1708,10 @@
 
         // Cartes statistiques
         const stats = [
-          { label: 'Articles', value: State.data.articles.length, icon: '📝' },
-          { label: 'Podcasts', value: State.data.episodes.length, icon: '🎙️' },
-          { label: 'Tâches', value: State.data.tasks.length, icon: '✅' },
-          { label: 'Contacts', value: State.data.contacts.length, icon: '👥' }
+          { label: 'Articles', value: State.data.articles.length },
+          { label: 'Podcasts', value: State.data.episodes.length },
+          { label: 'Tâches', value: State.data.tasks.length },
+          { label: 'Contacts', value: State.data.contacts.length }
         ];
 
         const cardWidth = (pageWidth - 60) / 4;
@@ -1746,7 +1746,7 @@
           doc.setFontSize(16);
           doc.setFont('helvetica', 'bold');
           doc.setTextColor(...colors.primary);
-          doc.text('🎯 Analyse des tâches', 20, yPos);
+          doc.text(' Analyse des tâches', 20, yPos);
           yPos += 10;
 
           const tasks = State.data.tasks;
@@ -1817,7 +1817,7 @@
           doc.setFontSize(14);
           doc.setFont('helvetica', 'bold');
           doc.setTextColor(...colors.primary);
-          doc.text('✅ Tâches récemment terminées', 20, yPos);
+          doc.text('Tâches récemment terminées', 20, yPos);
           yPos += 8;
 
           recentCompleted.forEach((task, i) => {
