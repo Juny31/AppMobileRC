@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr" data-theme="dark">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Regards Croisés — App</title>
-  <meta name="theme-color" content="#1d1d1f"/>
+  <meta name="theme-color" content="#1d1d1f" />
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <style>
@@ -213,7 +214,9 @@
     }
 
     /* Form Elements */
-    input, textarea, select {
+    input,
+    textarea,
+    select {
       width: 100%;
       padding: var(--space-md);
       border-radius: var(--radius-lg);
@@ -225,7 +228,9 @@
       font-family: inherit;
     }
 
-    input:focus, textarea:focus, select:focus {
+    input:focus,
+    textarea:focus,
+    select:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
@@ -325,7 +330,7 @@
       border: 1px solid var(--border);
     }
 
-    .progress > div {
+    .progress>div {
       height: 100%;
       background: var(--accent);
       transition: width 0.3s ease;
@@ -506,33 +511,33 @@
       .container {
         padding: 0 var(--space-md);
       }
-      
+
       .brand {
         flex-direction: column;
         gap: var(--space-sm);
         align-items: stretch;
       }
-      
+
       .brand-left {
         justify-content: center;
       }
-      
+
       .actions {
         justify-content: center;
       }
-      
+
       .grid {
         grid-template-columns: 1fr;
       }
-      
+
       .card {
         padding: var(--space-md);
       }
-      
+
       .search-container {
         flex-direction: column;
       }
-      
+
       .search-container input,
       .search-container select {
         min-width: auto;
@@ -568,6 +573,7 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -611,12 +617,15 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="container brand">
       <div class="brand-left">
         <div class="logo">RC</div>
-        <div class="title"><h1>Regards Croisés — App</h1></div>
+        <div class="title">
+          <h1>Regards Croisés — App</h1>
+        </div>
       </div>
       <div class="actions">
         <a class="btn" href="app.html">Accueil</a>
@@ -661,7 +670,8 @@
             <h3>Guidelines visuelles</h3>
             <span class="badge success">Design</span>
           </div>
-          <p class="muted">Interface sombre élégante, espaces généreux, cartes aérées, accent bleu #0071e3, typographie Apple SF Pro, animations fluides.</p>
+          <p class="muted">Interface sombre élégante, espaces généreux, cartes aérées, accent bleu #0071e3, typographie
+            Apple SF Pro, animations fluides.</p>
           <div class="stats-grid" style="margin-top: var(--space-md);">
             <div class="stat-card">
               <div class="number">12px</div>
@@ -820,7 +830,8 @@
             <select id="task-assignees" multiple size="4" title="Ctrl/Cmd + clic pour multi-sélection"></select>
           </div>
           <div class="actions">
-            <input id="team-new" placeholder="Ajouter un prénom (ex: Alex)" style="max-width:280px; margin-right: auto;">
+            <input id="team-new" placeholder="Ajouter un prénom (ex: Alex)"
+              style="max-width:280px; margin-right: auto;">
             <button id="team-add" type="button" class="btn">Ajouter au groupe</button>
           </div>
           <div class="form-group">
@@ -952,7 +963,7 @@
           </div>
         </form>
       </div>
-      
+
       <div class="card slide-in">
         <div class="card-header">
           <h3>Répartition</h3>
@@ -977,7 +988,7 @@
         </div>
         <div id="contact-bars" class="grid" style="margin-top: var(--space-md);"></div>
       </div>
-      
+
       <div class="search-container">
         <input id="contact-search" placeholder="🔍 Recherche…">
         <button id="contact-clear" class="btn btn-danger">Vider la liste</button>
@@ -992,12 +1003,13 @@
           <span class="badge" id="team-count">0</span>
         </div>
         <div class="actions" style="margin-bottom: var(--space-md);">
-          <input id="team-input" placeholder="Ajouter un prénom (ex: Alex)" style="max-width:300px; margin-right: auto;">
+          <input id="team-input" placeholder="Ajouter un prénom (ex: Alex)"
+            style="max-width:300px; margin-right: auto;">
           <button id="team-add-main" class="btn btn-primary" type="button">Ajouter</button>
         </div>
         <div id="team-list" class="actions"></div>
       </div>
-      
+
       <div class="card slide-in">
         <div class="card-header">
           <h3>Export PDF</h3>
@@ -1006,7 +1018,7 @@
         <p class="muted">Logo, stats, échéances, récapitulatif des tâches terminées avec design professionnel.</p>
         <button id="btn-pdf" class="btn btn-primary">📄 Exporter le rapport PDF</button>
       </div>
-      
+
       <div class="card slide-in">
         <div class="card-header">
           <h3>Maintenance</h3>
@@ -1022,7 +1034,7 @@
 
   <button id="btn-install" class="btn btn-primary">📱 Installer l'app</button>
   <div id="toast" role="status" aria-live="polite"></div>
-  
+
   <footer class="container">
     <small>© <span id="year"></span> Regards Croisés — Application de gestion</small>
   </footer>
@@ -1031,7 +1043,7 @@
     const KEY = 'rc-data-modern-v1';
     const THEME_KEY = 'rc-theme';
     const $ = s => document.querySelector(s);
-    
+
     const State = {
       data: {
         articles: [],
@@ -1093,7 +1105,7 @@
     }
 
     function selectTab(name) {
-      document.querySelectorAll('.seg').forEach(b => 
+      document.querySelectorAll('.seg').forEach(b =>
         b.setAttribute('aria-selected', String(b.dataset.tab === name))
       );
       document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
@@ -1120,7 +1132,7 @@
       const sel = $('#task-assignees');
       if (!sel) return;
       const selected = Array.from(sel.selectedOptions).map(o => o.value);
-      sel.innerHTML = (State.data.team || []).map(n => 
+      sel.innerHTML = (State.data.team || []).map(n =>
         `<option value="${n}">${n}</option>`
       ).join('');
       selected.forEach(v => {
@@ -1132,19 +1144,19 @@
     // Articles functions
     function renderArticles(list = State.data.articles) {
       const q = $('#article-search')?.value?.trim().toLowerCase() || '';
-      const filtered = q ? list.filter(a => 
+      const filtered = q ? list.filter(a =>
         matches(q, a.title, a.summary, (a.tags || []).join(','))
       ) : list;
-      
+
       const wrap = $('#article-list');
       if (!wrap) return;
       wrap.innerHTML = '';
-      
+
       if (!filtered.length) {
         wrap.innerHTML = '<div class="card muted">Aucun article trouvé.</div>';
         return;
       }
-      
+
       filtered.forEach(a => {
         const el = document.createElement('div');
         el.className = 'card slide-in';
@@ -1161,11 +1173,11 @@
         `;
         wrap.appendChild(el);
       });
-      
-      wrap.querySelectorAll('[data-edit]').forEach(b => 
+
+      wrap.querySelectorAll('[data-edit]').forEach(b =>
         b.onclick = () => editArticle(b.dataset.edit)
       );
-      wrap.querySelectorAll('[data-del]').forEach(b => 
+      wrap.querySelectorAll('[data-del]').forEach(b =>
         b.onclick = () => delArticle(b.dataset.del)
       );
     }
@@ -1193,27 +1205,27 @@
     // Episodes functions
     function renderEpisodes(list = State.data.episodes) {
       const q = $('#ep-search')?.value?.trim().toLowerCase() || '';
-      const filtered = q ? list.filter(e => 
+      const filtered = q ? list.filter(e =>
         matches(q, e.title, e.guests, e.theme, e.status, e.date)
       ) : list;
-      
+
       const wrap = $('#ep-list');
       if (!wrap) return;
       wrap.innerHTML = '';
-      
+
       if (!filtered.length) {
         wrap.innerHTML = '<div class="card muted">Aucun épisode trouvé.</div>';
         return;
       }
-      
+
       filtered.forEach(e => {
         const el = document.createElement('div');
         el.className = 'card slide-in';
-        const img = e.image ? 
+        const img = e.image ?
           `<img src="${e.image}" alt="visuel" style="width:100%;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:var(--space-md)">` : '';
-        const audio = e.audio ? 
+        const audio = e.audio ?
           `<audio controls style="width:100%;margin-top:var(--space-sm)"><source src="${e.audio}"></audio>` : '';
-        
+
         el.innerHTML = `
           ${img}
           <h3>${e.title}</h3>
@@ -1234,11 +1246,11 @@
         `;
         wrap.appendChild(el);
       });
-      
-      wrap.querySelectorAll('[data-ep-edit]').forEach(b => 
+
+      wrap.querySelectorAll('[data-ep-edit]').forEach(b =>
         b.onclick = () => editEpisode(b.dataset.epEdit)
       );
-      wrap.querySelectorAll('[data-ep-del]').forEach(b => 
+      wrap.querySelectorAll('[data-ep-del]').forEach(b =>
         b.onclick = () => delEpisode(b.dataset.epDel)
       );
     }
@@ -1278,15 +1290,15 @@
       const weekAhead = new Date();
       weekAhead.setDate(now.getDate() + 7);
       const late = t.filter(x => x.status !== 'Terminé' && x.due && new Date(x.due) < now).length;
-      const week = t.filter(x => x.status !== 'Terminé' && x.due && 
+      const week = t.filter(x => x.status !== 'Terminé' && x.due &&
         new Date(x.due) <= weekAhead && new Date(x.due) >= now).length;
-      
+
       $('#stat-task-total').textContent = total;
       $('#stat-task-done').textContent = done;
       $('#stat-task-high').textContent = high;
       $('#stat-task-late').textContent = late;
       $('#stat-task-week').textContent = week;
-      
+
       const pct = total ? Math.round((done / total) * 100) : 0;
       $('#task-progress').style.width = pct + '%';
       $('#task-progress').title = pct + '%';
@@ -1295,12 +1307,12 @@
     function sortTasks(list) {
       const mode = $('#task-sort').value;
       const priRank = { Haute: 0, Moyenne: 1, Basse: 2 };
-      
+
       if (mode === 'due') {
         return list.slice().sort((a, b) => (a.due || '').localeCompare(b.due || ''));
       }
       if (mode === 'priority') {
-        return list.slice().sort((a, b) => 
+        return list.slice().sort((a, b) =>
           (priRank[a.priority] ?? 9) - (priRank[b.priority] ?? 9)
         );
       }
@@ -1310,30 +1322,30 @@
     function renderTasks(list = State.data.tasks) {
       computeTaskStats();
       const q = $('#task-search')?.value?.trim().toLowerCase() || '';
-      const filtered = q ? list.filter(t => 
+      const filtered = q ? list.filter(t =>
         matches(q, t.title, t.notes, (t.assignees || []).join(','))
       ) : list;
       const sorted = sortTasks(filtered);
-      
+
       const wrap = $('#task-list');
       if (!wrap) return;
       wrap.innerHTML = '';
-      
+
       if (!sorted.length) {
         wrap.innerHTML = '<div class="card muted">Aucune tâche trouvée.</div>';
         return;
       }
-      
+
       sorted.forEach(t => {
         const el = document.createElement('div');
         el.className = 'card slide-in';
         el.draggable = true;
         el.dataset.id = t.id;
-        
+
         const who = t.assignees || [];
         const due = t.due ? ` 📅 ${t.due}` : '';
         const overdue = t.status !== 'Terminé' && t.due && (new Date(t.due) < new Date());
-        
+
         el.innerHTML = `
           <h3>${t.title}</h3>
           <div class="actions" style="margin: var(--space-sm) 0;">
@@ -1347,22 +1359,22 @@
             <button class="btn btn-danger" data-task-del="${t.id}">🗑️ Supprimer</button>
           </div>
         `;
-        
+
         if (overdue) {
           el.style.border = '2px solid var(--danger)';
           el.style.background = 'rgba(255, 59, 48, 0.05)';
         }
-        
+
         wrap.appendChild(el);
       });
-      
-      wrap.querySelectorAll('[data-task-edit]').forEach(b => 
+
+      wrap.querySelectorAll('[data-task-edit]').forEach(b =>
         b.onclick = () => editTask(b.dataset.taskEdit)
       );
-      wrap.querySelectorAll('[data-task-del]').forEach(b => 
+      wrap.querySelectorAll('[data-task-del]').forEach(b =>
         b.onclick = () => delTask(b.dataset.taskDel)
       );
-      
+
       // Drag and drop setup
       wrap.querySelectorAll('.card').forEach(c => {
         c.addEventListener('dragstart', e => {
@@ -1377,13 +1389,13 @@
         a.innerHTML = '';
         const status = a.dataset.status;
         const items = State.data.tasks.filter(t => t.status === status);
-        
+
         items.forEach(t => {
           const k = document.createElement('div');
           k.className = 'kan-card';
           k.draggable = true;
           k.dataset.id = t.id;
-          
+
           const who = t.assignees || [];
           k.innerHTML = `
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-xs);">
@@ -1394,28 +1406,28 @@
               👤 ${who.join(', ') || '—'} ${t.due ? ('📅 ' + t.due) : ''}
             </div>
           `;
-          
+
           k.addEventListener('dragstart', e => {
             e.dataTransfer.setData('text/plain', t.id);
           });
-          
+
           a.appendChild(k);
         });
-        
+
         a.addEventListener('dragover', e => e.preventDefault());
         a.addEventListener('drop', e => {
           e.preventDefault();
           const id = e.dataTransfer.getData('text/plain');
           const idx = State.data.tasks.findIndex(x => x.id === id);
           if (idx < 0) return;
-          
+
           const prev = State.data.tasks[idx];
           State.data.tasks[idx] = {
             ...prev,
             status: status,
             completedAt: status === 'Terminé' ? (prev.completedAt || new Date().toISOString()) : prev.completedAt
           };
-          
+
           State.save();
           renderTasks();
           buildKanban();
@@ -1433,13 +1445,13 @@
       $('#task-priority').value = t.priority;
       $('#task-notes').value = t.notes || '';
       $('#task-due').value = t.due || '';
-      
+
       refreshAssigneeOptions();
       const sel = $('#task-assignees');
-      [...sel.options].forEach(o => 
+      [...sel.options].forEach(o =>
         o.selected = (t.assignees || []).includes(o.value)
       );
-      
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
       selectTab('tasks');
     }
@@ -1458,7 +1470,7 @@
     function computeContactStats() {
       const c = State.data.contacts;
       const by = s => c.filter(x => x.status === s).length;
-      
+
       $('#st-contacted').textContent = by('En contact');
       $('#st-tocontact').textContent = by('À contacter');
       $('#st-done').textContent = by('Terminé');
@@ -1468,23 +1480,23 @@
     function renderContacts(list = State.data.contacts) {
       computeContactStats();
       const q = $('#contact-search')?.value?.trim().toLowerCase() || '';
-      const filtered = q ? list.filter(c => 
+      const filtered = q ? list.filter(c =>
         matches(q, c.name, c.email, c.social)
       ) : list;
-      
+
       const wrap = $('#contact-list');
       if (!wrap) return;
       wrap.innerHTML = '';
-      
+
       if (!filtered.length) {
         wrap.innerHTML = '<div class="card muted">Aucun contact trouvé.</div>';
         return;
       }
-      
+
       filtered.forEach(c => {
         const el = document.createElement('div');
         el.className = 'card slide-in';
-        
+
         el.innerHTML = `
           <h3>${c.name}</h3>
           <div class="actions" style="margin: var(--space-sm) 0;">
@@ -1503,11 +1515,11 @@
         `;
         wrap.appendChild(el);
       });
-      
-      wrap.querySelectorAll('[data-contact-edit]').forEach(b => 
+
+      wrap.querySelectorAll('[data-contact-edit]').forEach(b =>
         b.onclick = () => editContact(b.dataset.contactEdit)
       );
-      wrap.querySelectorAll('[data-contact-del]').forEach(b => 
+      wrap.querySelectorAll('[data-contact-del]').forEach(b =>
         b.onclick = () => delContact(b.dataset.contactDel)
       );
     }
@@ -1540,7 +1552,7 @@
       const t = State.data.theme || { title: '', desc: '' };
       $('#theme-title').value = t.title || '';
       $('#theme-desc').value = t.desc || '';
-      $('#theme-preview').textContent = t.title ? 
+      $('#theme-preview').textContent = t.title ?
         (t.title + ' — ' + (t.desc || '')) : 'Aucun thème défini.';
     }
 
@@ -1548,12 +1560,12 @@
     function renderTeam() {
       const wrap = $('#team-list');
       wrap.innerHTML = '';
-      
+
       if (!State.data.team.length) {
         wrap.innerHTML = '<span class="muted">Aucun membre pour le moment.</span>';
         return;
       }
-      
+
       State.data.team.forEach(name => {
         const btn = document.createElement('button');
         btn.className = 'btn';
@@ -1578,9 +1590,10 @@
       });
     }
 
-    // PDF Export (simplified version)
+    // Fonction d'export PDF améliorée pour Regards Croisés
     async function exportPDF() {
       try {
+        // Charger jsPDF si nécessaire
         if (!window.jspdf) {
           await new Promise((resolve, reject) => {
             const script = document.createElement('script');
@@ -1590,39 +1603,325 @@
             document.head.appendChild(script);
           });
         }
-        
+
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        // Add content
-        doc.setFontSize(20);
-        doc.text('Regards Croisés - Rapport', 20, 30);
-        
-        doc.setFontSize(12);
-        doc.text(new Date().toLocaleDateString(), 20, 50);
-        
-        const theme = State.data.theme || {};
-        doc.text(`Thème: ${theme.title || 'Non défini'}`, 20, 70);
-        
-        const stats = [
-          `Articles: ${State.data.articles.length}`,
-          `Épisodes: ${State.data.episodes.length}`,
-          `Tâches: ${State.data.tasks.length}`,
-          `Contacts: ${State.data.contacts.length}`
-        ];
-        
-        stats.forEach((stat, i) => {
-          doc.text(stat, 20, 90 + (i * 10));
+        const doc = new jsPDF('portrait', 'mm', 'a4');
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        let yPos = 20;
+
+        // Couleurs du thème
+        const colors = {
+          primary: [0, 113, 227],      // Bleu accent
+          dark: [29, 29, 31],          // Gris foncé
+          light: [161, 161, 166],      // Gris clair
+          success: [40, 205, 65],      // Vert
+          warning: [255, 159, 10],     // Orange
+          danger: [255, 59, 48],       // Rouge
+          background: [245, 245, 247]  // Gris très clair
+        };
+
+        // === EN-TÊTE ===
+        // Fond dégradé simulé avec rectangles
+        doc.setFillColor(...colors.primary);
+        doc.rect(0, 0, pageWidth, 60, 'F');
+
+        doc.setFillColor(255, 255, 255, 0.1);
+        doc.rect(0, 45, pageWidth, 15, 'F');
+
+        // Logo simulé
+        doc.setFillColor(255, 255, 255);
+        doc.roundedRect(20, 15, 12, 12, 2, 2, 'F');
+        doc.setTextColor(0, 113, 227);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('RC', 26, 23);
+
+        // Titre principal
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(24);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Regards Croisés', 40, 25);
+
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Rapport d\'activité', 40, 35);
+
+        // Date et heure
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('fr-FR', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
         });
-        
-        doc.save(`RC-Rapport-${Date.now()}.pdf`);
-        toast('PDF exporté avec succès');
+        doc.setFontSize(10);
+        doc.text(`Généré le ${dateStr}`, 40, 45);
+
+        yPos = 80;
+
+        // === THÈME DU MOIS ===
+        doc.setTextColor(...colors.dark);
+        const theme = State.data.theme || {};
+
+        if (theme.title || theme.desc) {
+          // Fond coloré pour la section thème
+          doc.setFillColor(...colors.background);
+          doc.roundedRect(15, yPos - 10, pageWidth - 30, 25, 3, 3, 'F');
+
+          doc.setFontSize(16);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...colors.primary);
+          doc.text('📋 Thème du mois', 20, yPos);
+
+          yPos += 10;
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...colors.dark);
+
+          if (theme.title) {
+            const titleLines = doc.splitTextToSize(theme.title, pageWidth - 50);
+            doc.text(titleLines, 20, yPos);
+            yPos += titleLines.length * 5;
+          }
+
+          if (theme.desc) {
+            yPos += 3;
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(...colors.light);
+            const descLines = doc.splitTextToSize(theme.desc, pageWidth - 50);
+            doc.text(descLines, 20, yPos);
+            yPos += descLines.length * 5;
+          }
+
+          yPos += 15;
+        }
+
+        // === STATISTIQUES GÉNÉRALES ===
+        doc.setFillColor(...colors.background);
+        doc.roundedRect(15, yPos - 5, pageWidth - 30, 30, 3, 3, 'F');
+
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...colors.primary);
+        doc.text('📊 Vue d\'ensemble', 20, yPos + 5);
+
+        // Cartes statistiques
+        const stats = [
+          { label: 'Articles', value: State.data.articles.length, icon: '📝' },
+          { label: 'Podcasts', value: State.data.episodes.length, icon: '🎙️' },
+          { label: 'Tâches', value: State.data.tasks.length, icon: '✅' },
+          { label: 'Contacts', value: State.data.contacts.length, icon: '👥' }
+        ];
+
+        const cardWidth = (pageWidth - 60) / 4;
+        stats.forEach((stat, i) => {
+          const x = 20 + (i * (cardWidth + 5));
+          const y = yPos + 15;
+
+          // Carte
+          doc.setFillColor(255, 255, 255);
+          doc.roundedRect(x, y, cardWidth, 15, 2, 2, 'F');
+
+          // Bordure subtile
+          doc.setDrawColor(...colors.light);
+          doc.setLineWidth(0.1);
+          doc.roundedRect(x, y, cardWidth, 15, 2, 2, 'S');
+
+          // Contenu
+          doc.setFontSize(8);
+          doc.setTextColor(...colors.light);
+          doc.text(stat.icon + ' ' + stat.label, x + 2, y + 5);
+
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...colors.primary);
+          doc.text(stat.value.toString(), x + 2, y + 12);
+        });
+
+        yPos += 45;
+
+        // === TÂCHES - ANALYSE DÉTAILLÉE ===
+        if (State.data.tasks.length > 0) {
+          doc.setFontSize(16);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...colors.primary);
+          doc.text('🎯 Analyse des tâches', 20, yPos);
+          yPos += 10;
+
+          const tasks = State.data.tasks;
+          const taskStats = {
+            total: tasks.length,
+            done: tasks.filter(t => t.status === 'Terminé').length,
+            inProgress: tasks.filter(t => t.status === 'En cours').length,
+            todo: tasks.filter(t => t.status === 'À faire').length,
+            high: tasks.filter(t => t.priority === 'Haute').length,
+            overdue: tasks.filter(t => t.status !== 'Terminé' && t.due && new Date(t.due) < new Date()).length
+          };
+
+          const completion = taskStats.total > 0 ? Math.round((taskStats.done / taskStats.total) * 100) : 0;
+
+          // Barre de progression
+          doc.setFillColor(...colors.background);
+          doc.roundedRect(20, yPos, pageWidth - 40, 8, 2, 2, 'F');
+
+          if (completion > 0) {
+            doc.setFillColor(...colors.success);
+            const progressWidth = ((pageWidth - 40) * completion) / 100;
+            doc.roundedRect(20, yPos, progressWidth, 8, 2, 2, 'F');
+          }
+
+          doc.setFontSize(10);
+          doc.setTextColor(...colors.dark);
+          doc.text(`Progression: ${completion}% (${taskStats.done}/${taskStats.total})`, 22, yPos + 6);
+
+          yPos += 15;
+
+          // Détails des statuts
+          const statusData = [
+            { label: 'Terminées', value: taskStats.done, color: colors.success },
+            { label: 'En cours', value: taskStats.inProgress, color: colors.warning },
+            { label: 'À faire', value: taskStats.todo, color: colors.light },
+            { label: 'Priorité haute', value: taskStats.high, color: colors.danger },
+            { label: 'En retard', value: taskStats.overdue, color: colors.danger }
+          ];
+
+          statusData.forEach((item, i) => {
+            const x = 20 + (i % 3) * 60;
+            const y = yPos + Math.floor(i / 3) * 10;
+
+            doc.setFillColor(...item.color);
+            doc.circle(x + 2, y + 2, 1.5, 'F');
+
+            doc.setFontSize(9);
+            doc.setTextColor(...colors.dark);
+            doc.text(`${item.label}: ${item.value}`, x + 6, y + 3);
+          });
+
+          yPos += 25;
+        }
+
+        // Nouvelle page si nécessaire
+        if (yPos > pageHeight - 60) {
+          doc.addPage();
+          yPos = 20;
+        }
+
+        // === TÂCHES RÉCENTES TERMINÉES ===
+        const recentCompleted = State.data.tasks
+          .filter(t => t.status === 'Terminé' && t.completedAt)
+          .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))
+          .slice(0, 5);
+
+        if (recentCompleted.length > 0) {
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...colors.primary);
+          doc.text('✅ Tâches récemment terminées', 20, yPos);
+          yPos += 8;
+
+          recentCompleted.forEach((task, i) => {
+            doc.setFillColor(i % 2 === 0 ? 255 : colors.background[0], colors.background[1], colors.background[2]);
+            doc.rect(20, yPos - 2, pageWidth - 40, 10, 'F');
+
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(...colors.dark);
+            doc.text(`• ${task.title}`, 22, yPos + 3);
+
+            if (task.assignees && task.assignees.length > 0) {
+              doc.setFont('helvetica', 'normal');
+              doc.setTextColor(...colors.light);
+              doc.text(`👤 ${task.assignees.join(', ')}`, 22, yPos + 7);
+            }
+
+            if (task.completedAt) {
+              const completedDate = new Date(task.completedAt).toLocaleDateString('fr-FR');
+              doc.setTextColor(...colors.success);
+              doc.text(completedDate, pageWidth - 40, yPos + 3);
+            }
+
+            yPos += 12;
+          });
+
+          yPos += 10;
+        }
+
+        // === CONTACTS PAR STATUT ===
+        if (State.data.contacts.length > 0) {
+          if (yPos > pageHeight - 80) {
+            doc.addPage();
+            yPos = 20;
+          }
+
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...colors.primary);
+          doc.text('👥 Répartition des contacts', 20, yPos);
+          yPos += 10;
+
+          const contactsByStatus = {
+            'En contact': State.data.contacts.filter(c => c.status === 'En contact').length,
+            'À contacter': State.data.contacts.filter(c => c.status === 'À contacter').length,
+            'Terminé': State.data.contacts.filter(c => c.status === 'Terminé').length,
+            'En attente': State.data.contacts.filter(c => c.status === 'En attente').length
+          };
+
+          Object.entries(contactsByStatus).forEach(([status, count], i) => {
+            const barWidth = Math.max(10, (count / State.data.contacts.length) * 120);
+            const color = status === 'En contact' ? colors.success :
+              status === 'À contacter' ? colors.warning :
+                status === 'Terminé' ? colors.primary : colors.light;
+
+            doc.setFillColor(...color);
+            doc.roundedRect(20, yPos + (i * 12), barWidth, 8, 2, 2, 'F');
+
+            doc.setFontSize(9);
+            doc.setTextColor(...colors.dark);
+            doc.text(`${status}: ${count}`, 25, yPos + (i * 12) + 5);
+
+            doc.setTextColor(...color);
+            doc.text(`${Math.round((count / State.data.contacts.length) * 100)}%`, 150, yPos + (i * 12) + 5);
+          });
+
+          yPos += 60;
+        }
+
+        // === PIED DE PAGE ===
+        doc.setFontSize(8);
+        doc.setTextColor(...colors.light);
+        doc.text('Regards Croisés — Application de gestion', 20, pageHeight - 20);
+        doc.text(`Page 1 • Généré le ${new Date().toLocaleString('fr-FR')}`, pageWidth - 80, pageHeight - 20);
+
+        // Ligne décorative en bas
+        doc.setDrawColor(...colors.primary);
+        doc.setLineWidth(0.5);
+        doc.line(20, pageHeight - 15, pageWidth - 20, pageHeight - 15);
+
+        // === ÉQUIPE (si définie) ===
+        if (State.data.team && State.data.team.length > 0 && yPos < pageHeight - 40) {
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(...colors.primary);
+          doc.text('👥 Équipe', 20, yPos);
+          yPos += 8;
+
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          doc.setTextColor(...colors.dark);
+          doc.text(State.data.team.join(' • '), 20, yPos);
+        }
+
+        // Sauvegarder le PDF
+        const fileName = `Regards-Croises-Rapport-${new Date().toISOString().slice(0, 10)}.pdf`;
+        doc.save(fileName);
+        toast('📄 Rapport PDF exporté avec succès !');
+
       } catch (error) {
-        console.error('Erreur PDF:', error);
-        toast('Erreur lors de l\'export PDF');
+        console.error('Erreur lors de l\'export PDF:', error);
+        toast('❌ Erreur lors de l\'export PDF');
       }
     }
-
     // Demo data
     function seedDemo() {
       State.data = {
@@ -1729,17 +2028,17 @@
       if (!State.data.team || !State.data.team.length) {
         State.data.team = ['Jude', 'Grace'];
       }
-      
+
       // Create demo data if empty
-      if (!State.data.articles.length && !State.data.episodes.length && 
-          !State.data.tasks.length && !State.data.contacts.length) {
+      if (!State.data.articles.length && !State.data.episodes.length &&
+        !State.data.tasks.length && !State.data.contacts.length) {
         seedDemo();
       } else {
         renderAll();
       }
 
       // Tab navigation
-      document.querySelectorAll('.seg').forEach(btn => 
+      document.querySelectorAll('.seg').forEach(btn =>
         btn.onclick = () => selectTab(btn.dataset.tab)
       );
 
@@ -1788,19 +2087,19 @@
           tags: stringifyTags($('#article-tags').value),
           summary: $('#article-summary').value.trim()
         };
-        
+
         if (!entry.title) {
           toast('Titre requis');
           return;
         }
-        
+
         const idx = State.data.articles.findIndex(a => a.id === id);
         if (idx > -1) {
           State.data.articles[idx] = entry;
         } else {
           State.data.articles.unshift(entry);
         }
-        
+
         State.save();
         e.target.reset();
         $('#article-id').value = '';
@@ -1823,19 +2122,19 @@
           status: $('#ep-status').value,
           date: $('#ep-date').value
         };
-        
+
         if (!entry.title) {
           toast('Titre requis');
           return;
         }
-        
+
         const idx = State.data.episodes.findIndex(a => a.id === id);
         if (idx > -1) {
           State.data.episodes[idx] = entry;
         } else {
           State.data.episodes.unshift(entry);
         }
-        
+
         State.save();
         e.target.reset();
         $('#ep-id').value = '';
@@ -1857,12 +2156,12 @@
           assignees,
           due: $('#task-due').value
         };
-        
+
         if (!entry.title) {
           toast('Titre requis');
           return;
         }
-        
+
         const idx = State.data.tasks.findIndex(a => a.id === id);
         if (idx > -1) {
           const prev = State.data.tasks[idx];
@@ -1879,7 +2178,7 @@
           }
           State.data.tasks.unshift(entry);
         }
-        
+
         State.save();
         e.target.reset();
         $('#task-id').value = '';
@@ -1901,19 +2200,19 @@
           email: $('#contact-email').value.trim(),
           social: $('#contact-social').value.trim()
         };
-        
+
         if (!entry.name) {
           toast('Nom requis');
           return;
         }
-        
+
         const idx = State.data.contacts.findIndex(a => a.id === id);
         if (idx > -1) {
           State.data.contacts[idx] = entry;
         } else {
           State.data.contacts.unshift(entry);
         }
-        
+
         State.save();
         e.target.reset();
         $('#contact-id').value = '';
@@ -2064,4 +2363,5 @@
     document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
+
 </html>
